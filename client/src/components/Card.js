@@ -8,6 +8,7 @@ const Card = () => {
     description: "",
     milestones: [],
     completed: false,
+    // comments: [],
   });
   const [milestone, setMilestone] = useState({
     title: "",
