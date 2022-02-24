@@ -1,0 +1,96 @@
+import React, { useState } from "react";
+
+const SearchBar = () => {
+  const [sortedBy, setSortedBy] = useState("");
+  return (
+    <div className="flex flex-row border-y-2 border-blue-400 w-3/5 mt-2 justify-around">
+      <label className="font-bold">Find Your Goals</label>
+      {sortedBy === "Completed" ? (
+        <button
+          className=" px-2 border-blue-200 rounded border-x-2 bg-blue-200"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("");
+          }}
+        >
+          Completed
+        </button>
+      ) : (
+        <button
+          className=" px-2 border-blue-400 rounded border-x-2"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("Completed");
+          }}
+        >
+          Completed
+        </button>
+      )}
+      {sortedBy === "In Progress" ? (
+        <button
+          className=" px-2 border-blue-200 rounded border-x-2 bg-blue-200"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("");
+          }}
+        >
+          In Progress
+        </button>
+      ) : (
+        <button
+          className=" px-2 border-blue-400 rounded border-x-2"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("In Progress");
+          }}
+        >
+          In Progress
+        </button>
+      )}
+      {sortedBy === "Date Added" ? (
+        <button
+          className=" px-2 border-blue-200 rounded border-x-2 bg-blue-200"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("");
+          }}
+        >
+          Date Added
+        </button>
+      ) : (
+        <button
+          className=" px-2 border-blue-400 rounded border-x-2"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("Date Added");
+          }}
+        >
+          Date Added
+        </button>
+      )}
+      {sortedBy === "Due Date" ? (
+        <button
+          className=" px-2 border-blue-200 rounded border-x-2 bg-blue-200"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("");
+          }}
+        >
+          Due Date
+        </button>
+      ) : (
+        <button
+          className=" px-2 border-blue-400 rounded border-x-2"
+          onClick={(e) => {
+            e.preventDefault();
+            setSortedBy("Due Date");
+          }}
+        >
+          Due Date
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default SearchBar;
