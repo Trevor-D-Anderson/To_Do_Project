@@ -13,7 +13,7 @@ const Nav = () => {
 
   return (
     <div className="flex flex-row items-end w-5/6 justify-around">
-      <h1 className="font-bold text-5xl font-sans">Make it Your Goal</h1>
+      <h1 className="font-bold text-5xl font-sans">To Do It</h1>
       <div>
         {login ? (
           <div>
