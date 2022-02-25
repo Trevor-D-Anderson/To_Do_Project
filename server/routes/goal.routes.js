@@ -10,6 +10,6 @@ module.exports = (app) => {
   app.get(
     "/api/goals/user/:id",
     authenticate,
-    GoalController.fundOneGoalByUserId
+    GoalController.findAllGoalsByUser
   );
 };
