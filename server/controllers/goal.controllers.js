@@ -72,7 +72,7 @@ module.exports = {
         User.findOneAndUpdate(
           { _id: newlyCreatedGoal.createdBy },
           {
-            $addToSet: { Goals: newlyCreatedGoal._id },
+            $addToSet: { goals: newlyCreatedGoal._id },
           },
           {
             new: true,
