@@ -1,6 +1,8 @@
 const MilestoneController = require("../controllers/milestone.controllers");
 const { authenticate } = require("../config/jwt.config");
 
+// Don't we need a route for get all milestones by GoalId?
+
 module.exports = (app) => {
   app.get(
     "/api/milestones",
