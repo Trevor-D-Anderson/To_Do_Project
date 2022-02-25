@@ -12,7 +12,7 @@ const Nav = () => {
   };
 
   return (
-    <div className="flex flex-row items-end w-5/6 justify-around">
+    <div className="flex flex-row items-center w-5/6 justify-around">
       <h1 className="font-bold text-5xl font-sans">To Do It</h1>
       <div>
         {login ? (
@@ -44,7 +44,7 @@ const Nav = () => {
               type="text"
               name="email"
               id=""
-              placeholder="Email"
+              placeholder="Password"
               onChange={(e) => {
                 e.preventDefault();
                 setPassword(e.target.value);
