@@ -7,9 +7,10 @@ module.exports = (app) => {
   app.get("/api/goals/:id", authenticate, GoalController.findOneGoal);
   app.put("/api/goals/:id", authenticate, GoalController.updateGoal);
   app.delete("/api/goals/:id", authenticate, GoalController.deleteGoal);
+  // gets all goals for a user id
   app.get(
     "/api/goals/user/:id",
     authenticate,
-    GoalController.fundOneGoalByUserId
+    GoalController.findAllGoalsByUser
   );
 };

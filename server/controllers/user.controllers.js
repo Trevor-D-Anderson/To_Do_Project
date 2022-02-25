@@ -104,7 +104,20 @@ module.exports = {
       });
   },
 
-  getOneUser: (req, res) => {
+  getOneUserById: (req, res) => {
+    User.findOne({ _id: req.params.id })
+      .populate("goals", "title completed comments milestones createdBy _id")
+      .then((oneUser) => {
+        console.log(oneUser);
+        res.json(oneUser);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
+
+  getOneUserByEmail: (req, res) => {
     User.findOne({ email: req.params.email })
       .populate("goals", "title completed comments milestones createdBy _id")
       .then((oneUser) => {
@@ -117,7 +130,35 @@ module.exports = {
       });
   },
 
-  updateUser: (req, res) => {
+  getLoggedInUser: (req, res) => {
+    User.findOne({ _id: req.jwtpayload.id })
+      .populate("goals", "title completed comments milestones createdBy _id")
+      .then((user) => {
+        console.log(user);
+        res.json(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
+
+  updateUserById: (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.email }, req.body, {
+      new: true,
+      runValidators: true,
+    })
+      .then((updatedUser) => {
+        console.log(updatedUser);
+        res.json(updatedUser);
+      })
+      .catch((err) => {
+        console.log("Update Failed");
+        res.status(400).json(err);
+      });
+  },
+
+  updateUserByEmail: (req, res) => {
     User.findOneAndUpdate({ email: req.params.email }, req.body, {
       new: true,
       runValidators: true,
