@@ -6,7 +6,13 @@ module.exports = (app) => {
   app.post("/api/users/login", UserController.login);
   app.post("/api/users/logout", UserController.logout);
   app.get("/api/users", authenticate, UserController.getAllUsers);
-  app.get("/api/users/:email", authenticate, UserController.getOneUser); // will need route for getting users by id also
-  app.put("/api/users/:email", authenticate, UserController.updateUser);
-  app.delete("/api/users/:id", UserController.deleteUser);
+  // get the logged in user by the id stored in their jwt cookie -- no parameters required
+  app.get("/api/users/authenticated", authenticate, UserController.getLoggedInUser);
+  // get / update using id
+  app.get("/api/users/id/:id", authenticate, UserController.getOneUserById);
+  app.put("/api/users/id/:id", authenticate, UserController.updateUserById);
+  // get / update using email
+  app.get("/api/users/email/:email", authenticate, UserController.getOneUserByEmail); // will need route for getting users by id also
+  app.put("/api/users/email/:email", authenticate, UserController.updateUserByEmail);
+  app.delete("/api/users/delete/:id", UserController.deleteUser);
 };

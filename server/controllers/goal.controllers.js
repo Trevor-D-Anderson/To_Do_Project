@@ -15,12 +15,12 @@ module.exports = {
       });
   },
 
-  // secure way to get all cards for a user, without passing ID around
+  // secure way to get all goals for a user, without passing ID around
   findAllGoalsByUser: (req, res) => {
     if (req.jwtpayload.id !== req.params.id) {
-      User.findOne({ email: req.params.id })
+      User.findOne({ _id: req.params.id })
         .then((userNotLoggedIn) => {
-          Card.find({ createdBy: userNotLoggedIn._id })
+          Goal.find({ createdBy: userNotLoggedIn._id })
             .then((allGoalsFromUser) => {
               console.log(allGoalsFromUser);
               res.json(allGoalsFromUser);
