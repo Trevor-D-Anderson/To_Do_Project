@@ -2,7 +2,7 @@ const Comment = require("../models/comment.model");
 const Milestone = require("../models/milestone.model");
 const jwt = require("jsonwebtoken");
 
-module.export = {
+module.exports = {
   findAllComments: (request, response) => {
     Comment.find()
       .then((allComments) => {

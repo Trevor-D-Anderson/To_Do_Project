@@ -20,6 +20,7 @@ require("./config/mongoose.config");
 // routes
 require("./routes/user.routes")(app);
 require("./routes/goal.routes")(app);
-// require("./routes/comment.routes")(app);
+require("./routes/comment.routes")(app);
+require("./routes/milestone.routes")(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
