@@ -17,38 +17,17 @@ module.exports = {
 
   // secure way to get all goals for a user, without passing ID around
   findAllGoalsByUser: (req, res) => {
-    if (req.jwtpayload.id !== req.params.id) {
-      Goal.findOne({ createdBy: req.params.id })
-        .populate("milestones", "body completed createdBy _id")
-        .populate("comments", "body likes createdFor createdBy _id")
-        .then((userNotLoggedIn) => {
-          Goal.find({ createdBy: userNotLoggedIn._id })
-            .then((allGoalsFromUser) => {
-              console.log(allGoalsFromUser);
-              res.json(allGoalsFromUser);
-            })
-            .catch((err) => {
-              console.log(err);
-              res.status(400).json(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(400).json(err);
-        });
-    } else {
-      Goal.find({ createdBy: req.jwtpayload.id })
-        .populate("milestones", "body completed createdBy _id")
-        .populate("comments", "body likes createdFor createdBy _id")
-        .then((allGoalsFromLoggedInUser) => {
-          console.log(allGoalsFromLoggedInUser);
-          res.json(allGoalsFromLoggedInUser);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(400).json(err);
-        });
-    }
+    Goal.find({ createdBy: req.params.id })
+      .populate("milestones", "body completed createdBy _id")
+      .populate("comments", "body likes createdFor createdBy _id")
+      .then((allGoalsFromUser) => {
+        console.log(allGoalsFromUser);
+        res.json(allGoalsFromUser);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
   },
 
   findOneGoal: (req, res) => {
