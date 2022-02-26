@@ -18,7 +18,9 @@ module.exports = {
   // secure way to get all goals for a user, without passing ID around
   findAllGoalsByUser: (req, res) => {
     if (req.jwtpayload.id !== req.params.id) {
-      User.findOne({ _id: req.params.id })
+      Goal.findOne({ createdBy: req.params.id })
+        .populate("milestones", "body completed createdBy _id")
+        .populate("comments", "body likes createdFor createdBy _id")
         .then((userNotLoggedIn) => {
           Goal.find({ createdBy: userNotLoggedIn._id })
             .then((allGoalsFromUser) => {
@@ -36,6 +38,8 @@ module.exports = {
         });
     } else {
       Goal.find({ createdBy: req.jwtpayload.id })
+        .populate("milestones", "body completed createdBy _id")
+        .populate("comments", "body likes createdFor createdBy _id")
         .then((allGoalsFromLoggedInUser) => {
           console.log(allGoalsFromLoggedInUser);
           res.json(allGoalsFromLoggedInUser);
