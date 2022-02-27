@@ -68,7 +68,7 @@ const Profile = () => {
       <Nav subtitle={"Profile Page"} />
       <SearchBar />
       <button
-        className="bg-white rounded-md mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
+        className="bg-white rounded-md mb-2 mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
         onClick={(e) => handleNewCard(e)}
       >
         Create New Card

@@ -49,7 +49,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "Date Added" ? (
         <button
-          className=" px-2 text-lg my-2 border-sky-400 rounded border-2 bg-sky-400"
+          className=" px-2 text-lg my-2 border-slate-300 rounded border-2 bg-slate-300"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -59,7 +59,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-sky-400 rounded border-2"
+          className=" px-2 text-lg my-2 border-slate-300 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("Date Added");
@@ -70,7 +70,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "Due Date" ? (
         <button
-          className=" px-2 text-lg my-2 border-sky-500 rounded border-2 bg-sky-500"
+          className=" px-2 text-lg my-2 border-slate-400 rounded border-2 bg-slate-400"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -80,7 +80,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-sky-500 rounded border-2"
+          className=" px-2 text-lg my-2 border-slate-300 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("Due Date");

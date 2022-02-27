@@ -51,7 +51,7 @@ const Card = (props) => {
               Goal Name:
             </label>
             <input
-              className="border rounded-md border-blue-400 h-8 w-[246px] text-2xl font-bold"
+              className="border rounded-md border-slate-300 h-8 w-[246px] text-2xl font-bold"
               type="text"
               name="title"
               value={thisCard.title}
@@ -62,7 +62,7 @@ const Card = (props) => {
             <div className="flex flex-row justify-between mt-2">
               <label>Start Date/Time:</label>
               <input
-                className="border rounded-md border-blue-400"
+                className="border rounded-md border-slate-300"
                 type="datetime-local"
                 name="startDate"
                 value={thisCard.startDate}
@@ -72,7 +72,7 @@ const Card = (props) => {
             <div className="flex flex-row justify-between mt-2">
               <label>Due Date/Time:</label>
               <input
-                className="border rounded-md border-blue-400"
+                className="border rounded-md border-slate-300"
                 type="datetime-local"
                 name="dueDate"
                 value={thisCard.dueDate}
@@ -84,7 +84,7 @@ const Card = (props) => {
               <textarea
                 cols="50"
                 rows="4"
-                className="border rounded-md border-blue-400"
+                className="border rounded-md border-slate-300"
                 name="description"
                 value={thisCard.description}
                 onChange={(e) => handleChange(e)}
