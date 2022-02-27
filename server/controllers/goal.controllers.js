@@ -20,13 +20,8 @@ module.exports = {
   // secure way to get all goals for a user, without passing ID around
   findAllGoalsByUser: (req, res) => {
     Goal.find({ createdBy: req.params.id })
-<<<<<<< HEAD
       .populate("milestones", "description completed createdBy _id")
       .populate("comments", "description likes associatedGoal createdBy _id")
-=======
-      .populate("milestones", "body completed createdBy _id")
-      .populate("comments", "body likes createdFor createdBy _id")
->>>>>>> 9c7db7a (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
       .then((allGoalsFromUser) => {
         console.log(allGoalsFromUser);
         res.json(allGoalsFromUser);
