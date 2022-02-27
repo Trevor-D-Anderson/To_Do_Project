@@ -5,18 +5,27 @@ const Nav = (props) => {
   const { subtitle } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // Setting login to a useState. to be changed when we have a login cookie
-  const [login, setLogin] = useState(true);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8000/api/users/login", {});
-    setLogin(true);
+    axios
+      .post(
+        "http://localhost:8000/api/users/login",
+        { email: email, password: password },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("loggedIn", "true");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleLogout = (e) => {
     e.preventDefault();
-    setLogin(false);
+    localStorage.clear();
   };
 
   return (
@@ -26,7 +35,7 @@ const Nav = (props) => {
         <h2 className="font-bold text-2xl font-sans">{subtitle}</h2>
       </div>
       <div>
-        {login ? (
+        {localStorage.getItem("loggedIn") === "True" ? (
           <div>
             <button
               onClick={(e) => handleLogout(e)}

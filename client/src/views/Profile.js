@@ -3,16 +3,30 @@ import Card from "../components/Card";
 import Nav from "../components/Nav";
 import axios from "axios";
 import SearchBar from "../components/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [goalsList, setGoalsList] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/goals").then((res) => {
-      console.log(res);
-      setGoalsList([...goalsList, ...res.data]);
-    });
-  });
+  const userId = 0;
+
+  const navigate = useNavigate();
+
+  // this is correct!
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("loggedIn") !== "true") {
+  //     navigate("/");
+  //   }
+  //   axios
+  //     .get(`http://localhost:8000/api/goals/user/${userId}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setGoalsList([...goalsList, ...res.data]);
+  //     });
+  // }, []);
 
   const handleNewCard = (e) => {
     e.preventDefault();
