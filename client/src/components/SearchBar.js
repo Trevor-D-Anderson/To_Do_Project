@@ -3,11 +3,11 @@ import React, { useState } from "react";
 const SearchBar = () => {
   const [sortedBy, setSortedBy] = useState("");
   return (
-    <div className="flex flex-row w-3/5 mt-2 justify-around items-center bg-white rounded-md">
+    <div className="flex flex-row w-3/5 mt-2 justify-around items-center shadow-lg bg-white rounded-md">
       <label className="font-bold font-sans text-lg">Find Your Goals</label>
       {sortedBy === "Completed" ? (
         <button
-          className=" px-2 text-lg my-2 rounded border-2 border-cyan-300 bg-cyan-300"
+          className=" px-2 text-lg my-2 rounded border-2 border-slate-100 bg-slate-100"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -17,7 +17,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-cyan-300 rounded border-2"
+          className=" px-2 text-lg my-2 border-slate-300 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("Completed");
@@ -28,7 +28,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "In Progress" ? (
         <button
-          className=" px-2 text-lg my-2 border-cyan-400 rounded border-2 bg-cyan-400"
+          className=" px-2 text-lg my-2 border-slate-200 rounded border-2 bg-slate-200"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -38,7 +38,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-cyan-400 rounded border-2"
+          className=" px-2 text-lg my-2 border-slate-300 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("In Progress");

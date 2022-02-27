@@ -43,7 +43,7 @@ const Card = (props) => {
   };
 
   return (
-    <div className="border bg-white border-blue-400 rounded-md w-1/2 flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
+    <div className=" bg-white rounded-md w-1/2 flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
       {thisCard.editing ? (
         <form className="flex flex-col items-center w-5/6">
           <div className="flex flex-row justify-between items-end w-full">

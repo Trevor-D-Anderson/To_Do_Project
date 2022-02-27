@@ -51,8 +51,8 @@ const Profile = () => {
       {
         title: "",
         startDate: Date.now(),
-        dueDate: 0,
-        completedDate: 0,
+        dueDate: "",
+        completedDate: "",
         description: "",
         milestones: [],
         completed: false,
@@ -64,7 +64,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-gradient-to-r from-cyan-400 to-sky-400 h-screen w-screen fixed -z-10"></div>
+      <div className="bg-gradient-to-r from-slate-100 to-slate-200 h-screen w-screen fixed -z-10"></div>
       <Nav subtitle={"Profile Page"} />
       <SearchBar />
       <button
