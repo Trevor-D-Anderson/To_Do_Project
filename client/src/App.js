@@ -1,15 +1,18 @@
 import "./App.css";
-import Card from "./components/Card";
-import Nav from "./components/Nav";
-import SearchBar from "./components/SearchBar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Profile from "./views/Profile";
+import Home from "./views/Home";
+import Friends from "./views/Friends";
 
 function App() {
   return (
-    <div className="App flex flex-col items-center">
-      <Nav />
-      <SearchBar />
-      <Card />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/friends" element={<Friends />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
