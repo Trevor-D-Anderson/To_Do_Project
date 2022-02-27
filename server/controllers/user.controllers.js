@@ -144,7 +144,7 @@ module.exports = {
   },
 
   updateUserById: (req, res) => {
-    User.findOneAndUpdate({ _id: req.params.email }, req.body, {
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
       runValidators: true,
     })
