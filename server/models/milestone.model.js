@@ -14,6 +14,15 @@ const MilestoneSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    startDate: {
+      type: String,
+    },
+    dueDate: {
+      type: String,
+    },
+    completedDate: {
+      type: String,
+    },
     associatedGoal: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Goal",
