@@ -7,7 +7,7 @@ const SearchBar = () => {
       <label className="font-bold font-sans text-lg">Find Your Goals</label>
       {sortedBy === "Completed" ? (
         <button
-          className=" px-2 text-lg my-2 border-blue-200 rounded border-2 bg-blue-200"
+          className=" px-2 text-lg my-2 rounded border-2 border-cyan-300 bg-cyan-300"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -28,7 +28,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "In Progress" ? (
         <button
-          className=" px-2 text-lg my-2 border-blue-200 rounded border-2 bg-blue-200"
+          className=" px-2 text-lg my-2 border-cyan-400 rounded border-2 bg-cyan-400"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -49,7 +49,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "Date Added" ? (
         <button
-          className=" px-2 text-lg my-2 border-blue-200 rounded border-2 bg-blue-200"
+          className=" px-2 text-lg my-2 border-sky-400 rounded border-2 bg-sky-400"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -59,7 +59,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-blue-400 rounded border-2"
+          className=" px-2 text-lg my-2 border-sky-400 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("Date Added");
@@ -70,7 +70,7 @@ const SearchBar = () => {
       )}
       {sortedBy === "Due Date" ? (
         <button
-          className=" px-2 text-lg my-2 border-blue-200 rounded border-2 bg-blue-200"
+          className=" px-2 text-lg my-2 border-sky-500 rounded border-2 bg-sky-500"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("");
@@ -80,7 +80,7 @@ const SearchBar = () => {
         </button>
       ) : (
         <button
-          className=" px-2 text-lg my-2 border-blue-500 rounded border-2"
+          className=" px-2 text-lg my-2 border-sky-500 rounded border-2"
           onClick={(e) => {
             e.preventDefault();
             setSortedBy("Due Date");

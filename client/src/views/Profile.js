@@ -38,6 +38,7 @@ const Profile = () => {
         title: "",
         startDate: Date.now(),
         dueDate: 0,
+        completedDate: 0,
         description: "",
         milestones: [],
         completed: false,
@@ -49,7 +50,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-screen w-screen fixed -z-10"></div>
+      <div className="bg-gradient-to-r from-cyan-400 to-sky-400 h-screen w-screen fixed -z-10"></div>
       <Nav subtitle={"Profile Page"} />
       <SearchBar />
       <button
@@ -59,7 +60,15 @@ const Profile = () => {
         Create New Card
       </button>
       {goalsList.map((card, index) => {
-        return <Card key={index} card={card} />;
+        return (
+          <Card
+            key={index}
+            card={card}
+            goalsList={goalsList}
+            setGoalsList={setGoalsList}
+            cardIndex={index}
+          />
+        );
       })}
     </div>
   );
