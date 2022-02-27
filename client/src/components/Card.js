@@ -27,7 +27,7 @@ const Card = (props) => {
   };
 
   return (
-    <div className="border border-blue-400 rounded-md w-2/5 flex flex-col items-center shadow-md mt-4 h-96">
+    <div className="border bg-white border-blue-400 rounded-md w-2/5 flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
       {thisCard.editing ? (
         <form className="flex flex-col items-center w-5/6">
           <div className="flex flex-row justify-around items-end w-11/12">
@@ -66,7 +66,7 @@ const Card = (props) => {
             <div className="flex flex-row justify-between mt-2">
               <label>Description:</label>
               <textarea
-                className="border rounded-md border-blue-400"
+                className="border w-80 h-32 rounded-md border-blue-400"
                 name="description"
                 value={thisCard.description}
                 onChange={(e) => handleChange(e)}
@@ -81,7 +81,7 @@ const Card = (props) => {
                 })
               : null}
             <button
-              className=" bg-emerald-400 rounded w-32 hover:bg-emerald-500"
+              className=" bg-emerald-400 rounded w-32 hover:bg-emerald-500 mb-4"
               onClick={(e) => addMilestone(e)}
             >
               Add Milestone

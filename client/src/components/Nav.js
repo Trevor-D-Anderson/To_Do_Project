@@ -30,11 +30,11 @@ const Nav = (props) => {
           <div>
             <button
               onClick={(e) => handleLogout(e)}
-              className="bg-red-500 rounded-md mt-2 px-2 hover:bg-red-400 shadow-md p-0.5 mr-4"
+              className="bg-red-500 rounded-md mt-2 px-2 hover:bg-red-400 shadow-md p-0.5 mr-4 font-bold"
             >
               LogOut
             </button>
-            <button className=" bg-emerald-500 rounded-md mt-2 px-2 shadow-md hover:bg-emerald-400 p-0.5">
+            <button className=" bg-emerald-500 rounded-md mt-2 px-2 shadow-md hover:bg-emerald-400 p-0.5 font-bold">
               Find People
             </button>
           </div>

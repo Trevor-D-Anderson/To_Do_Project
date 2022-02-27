@@ -31,11 +31,33 @@ const Profile = () => {
     ]);
   };
 
+  if (goalsList.length === 0) {
+    setGoalsList([
+      ...goalsList,
+      {
+        title: "",
+        startDate: Date.now(),
+        dueDate: 0,
+        description: "",
+        milestones: [],
+        completed: false,
+        comments: [],
+        editing: true,
+      },
+    ]);
+  }
+
   return (
     <div className="flex flex-col items-center">
+      <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-screen w-screen fixed -z-10"></div>
       <Nav subtitle={"Profile Page"} />
       <SearchBar />
-      <button onClick={(e) => handleNewCard(e)}>Create New Card</button>
+      <button
+        className="bg-white rounded-md mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
+        onClick={(e) => handleNewCard(e)}
+      >
+        Create New Card
+      </button>
       {goalsList.map((card, index) => {
         return <Card key={index} card={card} />;
       })}
