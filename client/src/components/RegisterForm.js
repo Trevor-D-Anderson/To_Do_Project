@@ -1,16 +1,22 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
+=======
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
 
 const RegisterForm = (props) => {
   
     const [confirmReg, setConfirmReg] = useState("");
     const [errors, setErrors] = useState({});
+<<<<<<< HEAD
 
     const [email_login, setEmail_login] = useState("");
     const [password_login, setPassword_login] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+=======
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
   
     // saving form inputs
     const [user, setUser] = useState({
@@ -20,6 +26,7 @@ const RegisterForm = (props) => {
       password: "",
       confirmPassword: "",
     });
+<<<<<<< HEAD
 
     // for Login 
     //will comment this, as I'm not passing email via props, but instead from below
@@ -27,14 +34,21 @@ const RegisterForm = (props) => {
     const navigate = useNavigate();
   
     // For Registration
+=======
+  
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
     const handleChange = (e) => {
       setUser({
         ...user,
         [e.target.name]: e.target.value,
       });
     };
+<<<<<<< HEAD
     
     //For Registration Portion
+=======
+  
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
     const register = (e) => {
       e.preventDefault();
   
@@ -60,6 +74,7 @@ const RegisterForm = (props) => {
         });
     };
 
+<<<<<<< HEAD
     //For Login Portion
     const login = (e) => {
         e.preventDefault();
@@ -91,10 +106,13 @@ const RegisterForm = (props) => {
           });
       };
 
+=======
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
  
   
 
   return (
+<<<<<<< HEAD
     // main div
     <div className="flex flex-row"> 
 
@@ -300,6 +318,12 @@ const RegisterForm = (props) => {
 
 
 
+=======
+    <div>
+        <div>
+            
+        </div>
+>>>>>>> 2658bbe (Merge pull request #6 from Trevor-D-Anderson/KaisBranch)
     </div>
   );
 };
