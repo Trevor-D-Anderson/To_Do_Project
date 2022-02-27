@@ -55,9 +55,8 @@ module.exports = {
                     }
                   )
                   .json({
-                    message: "Successfully",
-                    userLoggedIn: userRecord.username,
-                    userId: userRecord._id,
+                    message: "Successfully logged in",
+                    user: userRecord,
                   });
               } else {
                 res.status(400).json({
