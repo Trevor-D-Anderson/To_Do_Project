@@ -12,8 +12,6 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  // this is correct!
-
   // useEffect(() => {
   //   if (localStorage.getItem("loggedIn") !== "true") {
   //     navigate("/");
@@ -51,8 +49,8 @@ const Profile = () => {
       {
         title: "",
         startDate: Date.now(),
-        dueDate: 0,
-        completedDate: 0,
+        dueDate: "",
+        completedDate: "",
         description: "",
         milestones: [],
         completed: false,
@@ -64,11 +62,11 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-gradient-to-r from-cyan-400 to-sky-400 h-screen w-screen fixed -z-10"></div>
+      <div className="bg-gradient-to-r from-slate-100 to-slate-200 h-screen w-screen fixed -z-10"></div>
       <Nav subtitle={"Profile Page"} />
       <SearchBar />
       <button
-        className="bg-white rounded-md mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
+        className="bg-white rounded-md mb-2 mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
         onClick={(e) => handleNewCard(e)}
       >
         Create New Card
