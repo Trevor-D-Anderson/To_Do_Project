@@ -26,6 +26,15 @@ const GoalSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    startDate: {
+      type: String,
+    },
+    dueDate: {
+      type: String,
+    },
+    completedDate: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
