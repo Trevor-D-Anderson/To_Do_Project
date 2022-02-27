@@ -12,8 +12,6 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  // this is correct!
-
   // useEffect(() => {
   //   if (localStorage.getItem("loggedIn") !== "true") {
   //     navigate("/");

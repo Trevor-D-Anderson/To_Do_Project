@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Milestone = (props) => {
   const { milestone, editing, index, removeMilestone } = props;
   const [mile, setMile] = useState({ ...milestone });
-
+  // finish
   const handleChange = (e) => {
     e.preventDefault();
     let editing = { ...mile };
