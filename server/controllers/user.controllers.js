@@ -26,8 +26,7 @@ module.exports = {
   login: (req, res) => {
     User.findOne({ email: req.body.email })
       .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
-      .populate({path: "goals", populate: { path: "milestones" }})
-      .populate("comments", "")
+      .populate({path: "goals", populate: { path: "milestones" }}) // populating milestones in goals in user
       .then((userRecord) => {
         // check whether result is null
         if (userRecord === null) {
@@ -92,6 +91,8 @@ module.exports = {
   getAllUsers: (req, res) => {
     User.find()
       .populate("goals", "title completed comments milestones createdBy _id")
+      .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
+      .populate({path: "goals", populate: { path: "milestones" }}) // populating milestones in goals in user
       .populate("comments", "body likes createdFor createdBy _id")
       // returns all Users sorted alphabetically by type
       .collation({ locale: "en", strength: 2 })
@@ -109,6 +110,9 @@ module.exports = {
   getOneUserById: (req, res) => {
     User.findOne({ _id: req.params.id })
       .populate("goals", "title completed comments milestones createdBy _id")
+      .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
+      .populate({path: "goals", populate: { path: "milestones" }}) // populating milestones in goals in user
+      .populate("comments", "body likes createdFor createdBy _id")
       .then((oneUser) => {
         console.log(oneUser);
         res.json(oneUser);
@@ -122,6 +126,9 @@ module.exports = {
   getOneUserByEmail: (req, res) => {
     User.findOne({ email: req.params.email })
       .populate("goals", "title completed comments milestones createdBy _id")
+      .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
+      .populate({path: "goals", populate: { path: "milestones" }}) // populating milestones in goals in user
+      .populate("comments", "body likes createdFor createdBy _id")
       .then((oneUser) => {
         console.log(oneUser);
         res.json(oneUser);
@@ -135,6 +142,9 @@ module.exports = {
   getLoggedInUser: (req, res) => {
     User.findOne({ _id: req.jwtpayload.id })
       .populate("goals", "title completed comments milestones createdBy _id")
+      .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
+      .populate({path: "goals", populate: { path: "milestones" }}) // populating milestones in goals in user
+      .populate("comments", "body likes createdFor createdBy _id")
       .then((user) => {
         console.log(user);
         res.json(user);
