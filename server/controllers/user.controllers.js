@@ -25,6 +25,9 @@ module.exports = {
 
   login: (req, res) => {
     User.findOne({ email: req.body.email })
+      .populate("goals", "title completed comments milestones createdBy startDate dueDate completedDate _id")
+      .populate({path: "goals", populate: { path: "milestones" }})
+      .populate("comments", "")
       .then((userRecord) => {
         // check whether result is null
         if (userRecord === null) {
@@ -55,9 +58,8 @@ module.exports = {
                     }
                   )
                   .json({
-                    message: "Successfully",
-                    userLoggedIn: userRecord.username,
-                    userId: userRecord._id,
+                    message: "Successfully logged in",
+                    user: userRecord,
                   });
               } else {
                 res.status(400).json({
