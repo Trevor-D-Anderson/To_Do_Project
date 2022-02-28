@@ -49,8 +49,10 @@ const RegisterForm = (props) => {
           password: "",
           confirmPassword: "",
         });
-        setConfirmReg("Thank you for Registering, Proceed to Login!");
         setErrors({});
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userId", res.data.user._id);
+        navigate("/profile");
       })
       .catch((err) => {
         console.log(err);
@@ -77,8 +79,8 @@ const RegisterForm = (props) => {
         console.log("response: ", res);
         console.log("response data: ", res.data);
         //setUserEmail(email_login);
-        setEmail_login(email_login);
-
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userId", res.data.user._id);
         navigate("/profile");
       })
       .catch((err) => {

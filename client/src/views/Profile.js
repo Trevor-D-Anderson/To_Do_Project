@@ -8,23 +8,23 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [goalsList, setGoalsList] = useState([]);
 
-  const userId = 0;
+  const userId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("loggedIn") !== "true") {
-  //     navigate("/");
-  //   }
-  //   axios
-  //     .get(`http://localhost:8000/api/goals/user/${userId}`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       setGoalsList([...goalsList, ...res.data]);
-  //     });
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("loggedIn") !== "true") {
+      navigate("/");
+    }
+    axios
+      .get(`http://localhost:8000/api/goals/user/${userId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        setGoalsList([...goalsList, ...res.data]);
+      });
+  }, []);
 
   const handleNewCard = (e) => {
     e.preventDefault();
@@ -42,23 +42,6 @@ const Profile = () => {
       },
     ]);
   };
-
-  if (goalsList.length === 0) {
-    setGoalsList([
-      ...goalsList,
-      {
-        title: "",
-        startDate: Date.now(),
-        dueDate: "",
-        completedDate: "",
-        description: "",
-        milestones: [],
-        completed: false,
-        comments: [],
-        editing: true,
-      },
-    ]);
-  }
 
   return (
     <div className="flex flex-col items-center">
