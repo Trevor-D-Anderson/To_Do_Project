@@ -6,23 +6,6 @@ const Nav = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        "http://localhost:8000/api/users/login",
-        { email: email, password: password },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("loggedIn", "true");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.clear();
