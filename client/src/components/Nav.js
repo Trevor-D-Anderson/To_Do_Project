@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Nav = (props) => {
   const { subtitle } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.clear();
+    axios
+      .post("http://localhost:8000/api/users/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.clear();
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

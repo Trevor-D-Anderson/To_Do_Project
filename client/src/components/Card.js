@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Milestone from "./Milestone";
 
@@ -5,10 +6,50 @@ const Card = (props) => {
   const { card, goalsList, setGoalsList, cardIndex } = props;
   const [thisCard, setThisCard] = useState({ ...card });
 
+  const handleSave = (e) => {
+    e.preventDefault();
+    let goal = {
+      title: thisCard["title"],
+      description: thisCard["description"],
+      completed: thisCard["completed"],
+      comments: thisCard["comments"],
+      milestones: thisCard["milestones"],
+      startDate: thisCard["startDate"],
+      dueDate: thisCard["dueDate"],
+      completedDate: thisCard["completedDate"],
+    };
+    console.log("goal variable before post", goal);
+    axios
+      .post("http://localhost:8000/api/goals", goal, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        let editing = { ...res.data, editing: false };
+        setThisCard(editing);
+      });
+  };
+
   useEffect(() => {
     let listClone = [...goalsList];
     listClone[cardIndex] = thisCard;
     setGoalsList(listClone);
+    if (goalsList.length <= 0) {
+      setGoalsList([
+        ...goalsList,
+        {
+          title: "",
+          startDate: Date.now(),
+          dueDate: "",
+          completedDate: "",
+          description: "",
+          milestones: [],
+          completed: false,
+          comments: [],
+          editing: true,
+        },
+      ]);
+    }
   }, [thisCard]);
 
   const handleChange = (e) => {
@@ -25,9 +66,9 @@ const Card = (props) => {
       {
         title: "",
         description: "",
-        startDate: 0,
-        dueDate: 0,
-        completedDate: 0,
+        startDate: "",
+        dueDate: "",
+        completedDate: "",
         completed: false,
         milestoneEditing: true,
       },
@@ -44,7 +85,7 @@ const Card = (props) => {
 
   return (
     <div className=" bg-white rounded-md w-1/2 flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
-      {thisCard.editing ? (
+      {thisCard.editing === true ? (
         <form className="flex flex-col items-center w-5/6">
           <div className="flex flex-row justify-between items-end w-full">
             <label className="text-2xl font-bold font-sans mt-4">
@@ -116,14 +157,20 @@ const Card = (props) => {
               Add Milestone
             </button>
           </div>
-          <button className="rounded-md bg-green-400 mb-4 px-2 p-1">
+          <button
+            onClick={(e) => handleSave(e)}
+            className="rounded-md bg-green-400 mb-4 px-2 p-1"
+          >
             Save Goal
           </button>
         </form>
       ) : (
-        <h2 className="text-4xl font-bold font-sans mt-2">
-          {card.title || "Set Goal Name"}
-        </h2>
+        <div>
+          <h2 className="text-4xl font-bold font-sans mt-2">{card.title}</h2>
+          <div>
+            <h3>{card.description}</h3>
+          </div>
+        </div>
       )}
     </div>
   );
