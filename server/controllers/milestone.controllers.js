@@ -38,7 +38,7 @@ module.exports = {
 
         // push milestone into milestones field of goal that it was created for
         Goal.findOneAndUpdate(
-          { _id: newlyCreatedMilestone.createdBy },
+          { _id: newlyCreatedMilestone.associatedGoal },
           {
             $addToSet: { milestones: newlyCreatedMilestone._id },
           },

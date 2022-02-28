@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   findAllGoals: (req, res) => {
     Goal.find()
+      .populate("milestones", "body completed createdBy _id")
+      .populate("comments", "body likes createdFor createdBy _id")
       .then((allGoals) => {
         console.log(allGoals);
         res.json(allGoals);
@@ -32,6 +34,8 @@ module.exports = {
 
   findOneGoal: (req, res) => {
     Goal.findOne({ _id: req.params.id })
+      .populate("milestones", "body completed createdBy _id")
+      .populate("comments", "body likes createdFor createdBy _id")
       .then((oneGoal) => {
         console.log(oneGoal);
         res.json(oneGoal);

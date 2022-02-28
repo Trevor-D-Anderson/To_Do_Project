@@ -1,4 +1,5 @@
 const Comment = require("../models/comment.model");
+const Goal = require("../models/comment.model");
 const Milestone = require("../models/milestone.model");
 const jwt = require("jsonwebtoken");
 
@@ -48,24 +49,25 @@ module.exports = {
           }
         )
           .populate("comment", "body completed createdBy _id")
-          .then((goalToUpdate) => {
-            console.log(goalToUpdate);
-            res.json(newlyCreatedComment);
-            User.findOneAndUpdate(
-              { _id: newlyCreatedComment.createdBy },
-              {
-                $addToSet: { comments: newlyCreatedComment._id },
-              },
-              {
-                new: true,
-                useFindAndModify: true,
-              }
-            ).catch((err) => {
-              console.log("Create failed");
-              console.log("Push to User failed.");
-              res.status(400).json(err);
-            });
-          })
+          // .then((goalToUpdate) => {
+          //   console.log(goalToUpdate);
+          //   console.log("newly created comment : ", newlyCreatedComment);
+          //   res.json(newlyCreatedComment);
+          //   User.findOneAndUpdate(
+          //     { _id: newlyCreatedComment.createdBy },
+          //     {
+          //       $addToSet: { comments: newlyCreatedComment._id },
+          //     },
+          //     {
+          //       new: true,
+          //       useFindAndModify: true,
+          //     }
+          //   ).catch((err) => {
+          //     console.log("Create failed");
+          //     console.log("Push to User failed.");
+          //     res.status(400).json(err);
+          //   });
+          // })
           .catch((err) => {
             console.log("Create failed");
             console.log("Push to goal failed.");
