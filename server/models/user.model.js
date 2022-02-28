@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
@@ -20,6 +21,7 @@ const UserSchema = new mongoose.Schema(
         message: "Please enter a valid email.",
       },
       required: [true, "Email is required."],
+      unique: true,
     },
     password: {
       type: String,
@@ -41,6 +43,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// enables unique: true to output an error message like any other mongoose validator
+UserSchema.plugin(uniqueValidator, {
+  message:
+    "An account for that email already exists, please use a unique email address to register.",
+});
 
 // virtual attribute to store password confirmation temporarily
 UserSchema.virtual("confirmPassword")
