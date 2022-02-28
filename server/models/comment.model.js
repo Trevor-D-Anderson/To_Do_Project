@@ -10,7 +10,7 @@ const CommentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    createdFor: {
+    associatedGoal: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Goal",
     },

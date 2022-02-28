@@ -39,7 +39,7 @@ module.exports = {
 
         // push comment into comments field of user that created it field of goal that it was created for
         Goal.findOneAndUpdate(
-          { _id: newlyCreatedComment.createdFor },
+          { _id: newlyCreatedComment.associatedGoal },
           {
             $addToSet: { comments: newlyCreatedComment._id },
           },
@@ -48,26 +48,32 @@ module.exports = {
             useFindAndModify: true,
           }
         )
-          .populate("comment", "body completed createdBy _id")
-          // .then((goalToUpdate) => {
-          //   console.log(goalToUpdate);
-          //   console.log("newly created comment : ", newlyCreatedComment);
-          //   res.json(newlyCreatedComment);
-          //   User.findOneAndUpdate(
-          //     { _id: newlyCreatedComment.createdBy },
-          //     {
-          //       $addToSet: { comments: newlyCreatedComment._id },
-          //     },
-          //     {
-          //       new: true,
-          //       useFindAndModify: true,
-          //     }
-          //   ).catch((err) => {
-          //     console.log("Create failed");
-          //     console.log("Push to User failed.");
-          //     res.status(400).json(err);
-          //   });
-          // })
+          .console.log("associated goal id", newlyCreatedComment.associatedGoal)
+          .populate("comment", "body createdBy _id")
+          .then((goalToUpdate) => {
+            // console.log(goalToUpdate);
+            //   console.log("newly created comment : ", newlyCreatedComment);
+            res.json(newlyCreatedComment);
+            //   User.findOneAndUpdate(
+            //     { _id: newlyCreatedComment.createdBy },
+            //     {
+            //       $addToSet: { comments: newlyCreatedComment._id },
+            //     },
+            //     {
+            //       new: true,
+            //       useFindAndModify: true,
+            //     }
+            //   )
+            //     .then((userToUpdate) => {
+            //       console.log(userToUpdate);
+            //       res.json(newlyCreatedComment);
+            //     })
+            //     .catch((err) => {
+            //       console.log("Create failed");
+            //       console.log("Push to User failed.");
+            //       res.status(400).json(err);
+            //     });
+          })
           .catch((err) => {
             console.log("Create failed");
             console.log("Push to goal failed.");
