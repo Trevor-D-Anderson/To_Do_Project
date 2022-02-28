@@ -102,6 +102,9 @@ const Card = (props) => {
                       index={index}
                       cardEditing={thisCard.editing}
                       removeMilestone={removeMilestone}
+                      cardIndex={cardIndex}
+                      goalsList={goalsList}
+                      setGoalsList={setGoalsList}
                     />
                   );
                 })
