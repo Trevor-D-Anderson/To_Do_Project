@@ -7,6 +7,9 @@ const GoalSchema = new mongoose.Schema(
       required: [true, "Goal Title is required."],
       minlength: [2, "Title must be at least 2 characters long."],
     },
+    description: {
+      type: String,
+    },
     completed: {
       type: Boolean,
     },
