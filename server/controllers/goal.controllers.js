@@ -5,8 +5,8 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   findAllGoals: (req, res) => {
     Goal.find()
-      .populate("milestones", "body completed createdBy _id")
-      .populate("comments", "body likes createdFor createdBy _id")
+      .populate("milestones", "description completed createdBy _id")
+      .populate("comments", "description likes associatedGoal createdBy _id")
       .then((allGoals) => {
         console.log(allGoals);
         res.json(allGoals);
@@ -20,8 +20,8 @@ module.exports = {
   // secure way to get all goals for a user, without passing ID around
   findAllGoalsByUser: (req, res) => {
     Goal.find({ createdBy: req.params.id })
-      .populate("milestones", "body completed createdBy _id")
-      .populate("comments", "body likes createdFor createdBy _id")
+      .populate("milestones", "description completed createdBy _id")
+      .populate("comments", "description likes associatedGoal createdBy _id")
       .then((allGoalsFromUser) => {
         console.log(allGoalsFromUser);
         res.json(allGoalsFromUser);
@@ -34,8 +34,8 @@ module.exports = {
 
   findOneGoal: (req, res) => {
     Goal.findOne({ _id: req.params.id })
-      .populate("milestones", "body completed createdBy _id")
-      .populate("comments", "body likes createdFor createdBy _id")
+      .populate("milestones", "description completed createdBy _id")
+      .populate("comments", "description likes associatedGoal createdBy _id")
       .then((oneGoal) => {
         console.log(oneGoal);
         res.json(oneGoal);
