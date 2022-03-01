@@ -7,6 +7,7 @@ module.exports = {
     Goal.find()
       .populate("milestones", "description completed createdBy _id")
       .populate("comments", "description likes associatedGoal createdBy _id")
+      .sort({ createdAt: -1 })
       .then((allGoals) => {
         console.log(allGoals);
         res.json(allGoals);
@@ -22,6 +23,7 @@ module.exports = {
     Goal.find({ createdBy: req.params.id })
       .populate("milestones", "description completed createdBy _id")
       .populate("comments", "description likes associatedGoal createdBy _id")
+      .sort({ createdAt: -1 })
       .then((allGoalsFromUser) => {
         console.log(allGoalsFromUser);
         res.json(allGoalsFromUser);
