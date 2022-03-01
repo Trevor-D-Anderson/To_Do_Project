@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Milestone from "./Milestone";
 
 const Card = (props) => {
-  const { card, goalsList, setGoalsList, cardIndex } = props;
+  const { card, goalsList, setGoalsList, cardIndex, setRender } = props;
   const [thisCard, setThisCard] = useState({});
 
   const options = {
@@ -67,6 +67,7 @@ const Card = (props) => {
           console.log(err);
         });
     }
+    setRender(true);
   };
 
   useEffect(() => {
@@ -89,6 +90,7 @@ const Card = (props) => {
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setRender(true);
   };
 
   const handleEdit = (e) => {

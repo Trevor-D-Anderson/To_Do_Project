@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [goalsList, setGoalsList] = useState([]);
+  const [render, setRender] = useState(false);
 
   const userId = localStorage.getItem("userId");
 
@@ -22,9 +23,10 @@ const Profile = () => {
       })
       .then((res) => {
         console.log(res);
+        setRender(false);
         setGoalsList([...res.data]);
       });
-  }, []);
+  }, [render]);
 
   const handleNewCard = (e) => {
     e.preventDefault();
@@ -32,7 +34,7 @@ const Profile = () => {
       {
         title: "",
         startDate: "",
-        dueDate: 0,
+        dueDate: "",
         description: "",
         milestones: [],
         completed: false,
@@ -62,6 +64,7 @@ const Profile = () => {
             goalsList={goalsList}
             setGoalsList={setGoalsList}
             cardIndex={index}
+            setRender={setRender}
           />
         );
       })}
