@@ -4,58 +4,103 @@ import Milestone from "./Milestone";
 
 const Card = (props) => {
   const { card, goalsList, setGoalsList, cardIndex } = props;
-  const [thisCard, setThisCard] = useState({ ...card });
+  const [thisCard, setThisCard] = useState({});
+
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
 
   const handleSave = (e) => {
     e.preventDefault();
-    let goal = {
-      title: thisCard["title"],
-      description: thisCard["description"],
-      completed: thisCard["completed"],
-      comments: thisCard["comments"],
-      milestones: thisCard["milestones"],
-      startDate: thisCard["startDate"],
-      dueDate: thisCard["dueDate"],
-      completedDate: thisCard["completedDate"],
-    };
-    console.log("goal variable before post", goal);
-    axios
-      .post("http://localhost:8000/api/goals", goal, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res);
-        let editing = { ...res.data, editing: false };
-        setThisCard(editing);
-      });
+    if (!thisCard._id) {
+      let goal = {
+        title: thisCard["title"],
+        description: thisCard["description"],
+        completed: thisCard["completed"],
+        comments: thisCard["comments"],
+        milestones: thisCard["milestones"],
+        startDate: thisCard["startDate"],
+        dueDate: thisCard["dueDate"],
+        completedDate: thisCard["completedDate"],
+      };
+      console.log("goal variable before post", goal);
+      axios
+        .post("http://localhost:8000/api/goals", goal, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res);
+          let editing = { ...res.data, editing: false };
+          setThisCard(editing);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      let goal = {
+        title: thisCard["title"],
+        description: thisCard["description"],
+        completed: thisCard["completed"],
+        comments: thisCard["comments"],
+        milestones: thisCard["milestones"],
+        startDate: thisCard["startDate"],
+        dueDate: thisCard["dueDate"],
+        completedDate: thisCard["completedDate"],
+      };
+      console.log("goal variable before post", goal);
+      axios
+        .put(`http://localhost:8000/api/goals/${thisCard._id}`, goal, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res);
+          let editing = { ...res.data };
+          editing["editing"] = false;
+          setThisCard(editing);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
-    let listClone = [...goalsList];
-    listClone[cardIndex] = thisCard;
-    setGoalsList(listClone);
-    if (goalsList.length <= 0) {
-      setGoalsList([
-        ...goalsList,
-        {
-          title: "",
-          startDate: Date.now(),
-          dueDate: "",
-          completedDate: "",
-          description: "",
-          milestones: [],
-          completed: false,
-          comments: [],
-          editing: true,
-        },
-      ]);
-    }
-  }, [thisCard]);
+    setThisCard({ ...card });
+  }, [card]);
 
   const handleChange = (e) => {
     let editing = { ...thisCard };
     editing[e.target.name] = e.target.value;
-    setThisCard(editing);
+    let listClone = [...goalsList];
+    listClone[cardIndex] = editing;
+    setGoalsList(listClone);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:8000/api/goals/${thisCard._id}`, {
+        withCredentials: true,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    if (!thisCard["editing"]) {
+      let cardClone = { ...thisCard, editing: true };
+      setThisCard(cardClone);
+    } else {
+      let cardClone = { ...thisCard };
+      cardClone["editing"] = true;
+      setThisCard(cardClone);
+    }
   };
 
   const addMilestone = (e) => {
@@ -83,8 +128,13 @@ const Card = (props) => {
     setThisCard(clone);
   };
 
+  const displayDate = (d) => {
+    let date = new Date(d);
+    return date.toLocaleString("en-us", options);
+  };
+
   return (
-    <div className=" bg-white rounded-md w-1/2 flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
+    <div className=" bg-white rounded-2xl w-1/2 max-w-[600px] flex flex-col items-center shadow-xl mt-2 h-auto mb-2">
       {thisCard.editing === true ? (
         <form className="flex flex-col items-center w-5/6">
           <div className="flex flex-row justify-between items-end w-full">
@@ -116,6 +166,7 @@ const Card = (props) => {
                 className="border rounded-md border-slate-300"
                 type="datetime-local"
                 name="dueDate"
+                min={thisCard.startDate}
                 value={thisCard.dueDate}
                 onChange={(e) => handleChange(e)}
               />
@@ -141,7 +192,6 @@ const Card = (props) => {
                       key={index}
                       milestone={mile}
                       index={index}
-                      cardEditing={thisCard.editing}
                       removeMilestone={removeMilestone}
                       cardIndex={cardIndex}
                       goalsList={goalsList}
@@ -151,7 +201,7 @@ const Card = (props) => {
                 })
               : null}
             <button
-              className=" bg-emerald-400 rounded w-32 hover:bg-emerald-300 mb-4 mt-2 shadow-md"
+              className=" bg-slate-300 rounded w-32 hover:bg-slate-400 mb-4 mt-2 shadow-md"
               onClick={(e) => addMilestone(e)}
             >
               Add Milestone
@@ -165,10 +215,39 @@ const Card = (props) => {
           </button>
         </form>
       ) : (
-        <div>
-          <h2 className="text-4xl font-bold font-sans mt-2">{card.title}</h2>
+        <div className="mb-4 w-4/6">
+          <h2 className="text-4xl font-bold font-sans text-slate-500 mt-2 text-center mb-4">
+            {card.title}
+          </h2>
           <div>
-            <h3>{card.description}</h3>
+            <h3>
+              <span className="font-bold text-slate-500">Start Date:</span>{" "}
+              {displayDate(card.startDate)}
+            </h3>
+            <h3>
+              <span className="font-bold text-slate-500">Due Date:</span>{" "}
+              {displayDate(card.dueDate)}
+            </h3>
+          </div>
+          <div>
+            <h3 className="font-bold text-slate-500">Description:</h3>
+            <h4 className="border border-slate-300 w-full min-h-[50px] rounded-md p-2 my-2">
+              {card.description}
+            </h4>
+          </div>
+          <div className="flex flex-row justify-between">
+            <button
+              onClick={(e) => handleEdit(e)}
+              className=" bg-yellow-300 hover:bg-yellow-200 shadow-md rounded-md px-2 p-1"
+            >
+              Edit Goal
+            </button>
+            <button
+              onClick={(e) => handleDelete(e)}
+              className="rounded-md px-2 shadow-md bg-red-500 hover:bg-red-400 p-1"
+            >
+              Delete Goal
+            </button>
           </div>
         </div>
       )}
