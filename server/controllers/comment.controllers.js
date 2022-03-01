@@ -1,6 +1,6 @@
 const Comment = require("../models/comment.model");
-const Goal = require("../models/comment.model");
-const Milestone = require("../models/milestone.model");
+const Goal = require("../models/goal.model");
+const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
@@ -37,46 +37,42 @@ module.exports = {
       .then((newlyCreatedComment) => {
         console.log(newlyCreatedComment);
 
-        // push comment into comments field of user that created it field of goal that it was created for
+        // push comment into goal based on associated goal field
         Goal.findOneAndUpdate(
           { _id: newlyCreatedComment.associatedGoal },
-          {
-            $addToSet: { comments: newlyCreatedComment._id },
-          },
+          { $addToSet: { comments: newlyCreatedComment._id } },
           {
             new: true,
             useFindAndModify: true,
           }
         )
-          .console.log("associated goal id", newlyCreatedComment.associatedGoal)
-          .populate("comment", "body createdBy _id")
+          .populate("comments", "body likes associatedGoal createdBy _id")
           .then((goalToUpdate) => {
-            // console.log(goalToUpdate);
-            //   console.log("newly created comment : ", newlyCreatedComment);
-            res.json(newlyCreatedComment);
-            //   User.findOneAndUpdate(
-            //     { _id: newlyCreatedComment.createdBy },
-            //     {
-            //       $addToSet: { comments: newlyCreatedComment._id },
-            //     },
-            //     {
-            //       new: true,
-            //       useFindAndModify: true,
-            //     }
-            //   )
-            //     .then((userToUpdate) => {
-            //       console.log(userToUpdate);
-            //       res.json(newlyCreatedComment);
-            //     })
-            //     .catch((err) => {
-            //       console.log("Create failed");
-            //       console.log("Push to User failed.");
-            //       res.status(400).json(err);
-            //     });
+            console.log(goalToUpdate);
+            User.findOneAndUpdate(
+              { _id: newlyCreatedComment.createdBy },
+              {
+                $addToSet: { comments: newlyCreatedComment._id },
+              },
+              {
+                new: true,
+                useFindAndModify: true,
+              }
+            )
+              .then((userToUpdate) => {
+                console.log(userToUpdate);
+                res.json(newlyCreatedComment);
+              })
+              .catch((err) => {
+                console.log("Create failed");
+                console.log("Push to User failed.");
+                res.status(400).json(err);
+              });
           })
           .catch((err) => {
             console.log("Create failed");
             console.log("Push to goal failed.");
+            console.log(err);
             res.status(400).json(err);
           });
       })
@@ -87,6 +83,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+
   updateComment: (req, res) => {
     Comment.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
@@ -101,6 +98,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+
   deleteComment: (req, res) => {
     Goal.deleteOne({ _id: req.params.id })
       .then((result) => {

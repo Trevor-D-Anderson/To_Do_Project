@@ -65,6 +65,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+
   updateMilestone: (req, res) => {
     Milestone.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
@@ -79,6 +80,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+  
   deleteMilestone: (req, res) => {
     Goal.deleteOne({ _id: req.params.id })
       .then((result) => {
