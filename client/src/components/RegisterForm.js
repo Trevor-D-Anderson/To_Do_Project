@@ -95,95 +95,91 @@ const RegisterForm = (props) => {
     // main div
     <div className="flex flex-col w-screen items-center">
       <div className="bg-gradient-to-r from-slate-100 to-slate-200 h-screen w-screen fixed -z-10"></div>
-      <div className="font-bold text-5xl font-sans my-4">To Do It</div>
-      <div className="flex flex-row justify-center w-screen">
+      <div className="font-bold text-5xl font-sans text-slate-500 mt-8 mb-28">
+        To Do It
+      </div>
+      <div className="flex flex-row w-5/6 justify-around flex-wrap">
         {/* Div for Login Form */}
-        <div className="w-1/3 min-w-fit">
-          <div>
-            <div className="min-h-full flex items-center rounded-md shadow-lg justify-center py-12 px-4 mx-12 my-12 sm:px-6 lg:px-8 bg-white w-2/3">
-              <div className="max-w-md w-full space-y-8">
-                <div>
-                  <h2 className="mt-6 text-center text-3xl text-gray-90 text-slate-400">
-                    Login
-                  </h2>
-                </div>
-                <form className="mt-8 space-y-6" method="POST" onSubmit={login}>
-                  {errorMessage ? (
-                    <div className="alert alert-danger my-1">
-                      {errorMessage}
-                    </div>
-                  ) : null}
-                  <div className="rounded-md shadow-sm -space-y-px">
-                    {/* Email */}
-                    <div className="p-1">
-                      <label htmlFor="email" className="sr-only">
-                        {" "}
-                        email:{" "}
-                      </label>
-                      <input
-                        name="email"
-                        type="email"
-                        required
-                        className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="emailuser@domain.com"
-                        onChange={(e) => {
-                          setEmail_login(e.target.value);
-                        }}
-                      />
-                    </div>
-
-                    {/* Password */}
-                    <div className="p-1">
-                      <label htmlFor="password" className="sr-only">
-                        Password
-                      </label>
-                      <input
-                        name="password"
-                        type="password"
-                        required
-                        className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Password"
-                        onChange={(e) => {
-                          setPassword_login(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <button
-                      type="submit"
-                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <svg
-                          className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" />
-                        </svg>
-                      </span>
-                      Login
-                    </button>
-                  </div>
-                </form>
+        <div className="w-[400px]">
+          <div className="min-h-full flex items-center rounded-2xl shadow-lg justify-center px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-md w-full">
+              <div>
+                <h2 className="text-center text-4xl text-gray-90 font-bold text-slate-400">
+                  Login
+                </h2>
               </div>
+              <form className="mt-8" method="POST" onSubmit={login}>
+                {errorMessage ? (
+                  <div className="alert alert-danger my-1">{errorMessage}</div>
+                ) : null}
+                <div className="rounded-md shadow-sm -space-y-px">
+                  {/* Email */}
+                  <div className="p-1">
+                    <label htmlFor="email" className="sr-only">
+                      {" "}
+                      email:{" "}
+                    </label>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="emailuser@domain.com"
+                      onChange={(e) => {
+                        setEmail_login(e.target.value);
+                      }}
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div className="p-1">
+                    <label htmlFor="password" className="sr-only">
+                      Password
+                    </label>
+                    <input
+                      name="password"
+                      type="password"
+                      required
+                      className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Password"
+                      onChange={(e) => {
+                        setPassword_login(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="group relative top-16 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <svg
+                      className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" />
+                    </svg>
+                  </span>
+                  Login
+                </button>
+              </form>
             </div>
           </div>
         </div>
 
         {/* Div for Register Form */}
-        <div className="w-1/3 min-w-fit">
-          <div className="min-h-full rounded-md shadow-lg flex items-center justify-center py-12 px-4 mx-12 my-12 sm:px-6 lg:px-8 bg-white w-2/3">
-            <div className="max-w-md w-full space-y-8">
+        <div>
+          <div className="min-h-full w-[400px] rounded-2xl shadow-lg flex items-center justify-center pb-12 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-md  w-full">
               <div>
                 {confirmReg ? (
                   <h4 className="text-center">{confirmReg}</h4>
                 ) : null}
-                <h2 className="mt-6 text-center text-3xl text-gray-90 text-slate-400">
+                <h2 className="mt-6 text-center text-4xl font-bold text-gray-90 text-slate-400">
                   Sign Up
                 </h2>
               </div>

@@ -18,12 +18,13 @@ const Card = (props) => {
   const handleSave = (e) => {
     e.preventDefault();
     if (!thisCard._id) {
+      let cardId = "";
+      let editing = {};
       let goal = {
         title: thisCard["title"],
         description: thisCard["description"],
         completed: thisCard["completed"],
         comments: thisCard["comments"],
-        milestones: thisCard["milestones"],
         startDate: thisCard["startDate"],
         dueDate: thisCard["dueDate"],
         completedDate: thisCard["completedDate"],
@@ -35,8 +36,26 @@ const Card = (props) => {
         })
         .then((res) => {
           console.log(res);
-          let editing = { ...res.data, editing: false };
-          setThisCard(editing);
+          editing = { ...res.data, editing: false };
+          console.log();
+          cardId = res.data._id;
+          for (let x = 0; x < thisCard["milestones"].length; x++) {
+            let milestone = {
+              title: thisCard.milestones[x].title,
+              description: thisCard.milestones[x].description,
+              completed: false,
+              startDate: thisCard.milestones[x].startDate,
+              dueDate: thisCard.milestones[x].dueDate,
+              completedDate: "",
+              associatedGoal: cardId,
+            };
+            axios
+              .post("http://localhost:8000/api/milestones", milestone, {
+                withCredentials: true,
+              })
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -120,7 +139,9 @@ const Card = (props) => {
         milestoneEditing: true,
       },
     ];
-    setThisCard(changeCard);
+    let listClone = [...goalsList];
+    listClone[cardIndex] = changeCard;
+    setGoalsList(listClone);
   };
 
   const removeMilestone = (index) => {
@@ -198,6 +219,7 @@ const Card = (props) => {
                       cardIndex={cardIndex}
                       goalsList={goalsList}
                       setGoalsList={setGoalsList}
+                      card={card}
                     />
                   );
                 })
