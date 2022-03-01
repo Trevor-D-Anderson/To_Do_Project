@@ -22,17 +22,16 @@ const Profile = () => {
       })
       .then((res) => {
         console.log(res);
-        setGoalsList([...goalsList, ...res.data]);
+        setGoalsList([...res.data]);
       });
   }, []);
 
   const handleNewCard = (e) => {
     e.preventDefault();
     setGoalsList([
-      ...goalsList,
       {
         title: "",
-        startDate: Date.now(),
+        startDate: "",
         dueDate: 0,
         description: "",
         milestones: [],
@@ -40,16 +39,17 @@ const Profile = () => {
         comments: [],
         editing: true,
       },
+      ...goalsList,
     ]);
   };
 
   return (
     <div className="flex flex-col items-center">
       <div className="bg-gradient-to-r from-slate-100 to-slate-200 h-screen w-screen fixed -z-10"></div>
-      <Nav subtitle={"Profile Page"} />
+      <Nav />
       <SearchBar />
       <button
-        className="bg-white rounded-md mb-2 mt-4 px-2 p-1 shadow-lg hover:bg-slate-200 font-bold"
+        className="bg-white rounded-md mb-2 mt-4 px-2 p-1 text-slate-500 shadow-lg hover:bg-slate-200 font-bold"
         onClick={(e) => handleNewCard(e)}
       >
         Create New Card

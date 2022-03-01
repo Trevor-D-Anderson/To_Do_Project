@@ -4,7 +4,9 @@ const SearchBar = () => {
   const [sortedBy, setSortedBy] = useState("");
   return (
     <div className="flex flex-row w-3/5 mt-2 justify-around items-center shadow-lg bg-white rounded-md">
-      <label className="font-bold font-sans text-lg">Find Your Goals</label>
+      <label className="font-bold font-sans text-lg text-slate-500">
+        Find Your Goals
+      </label>
       {sortedBy === "Completed" ? (
         <button
           className=" px-2 text-lg my-2 rounded border-2 border-slate-100 bg-slate-100"

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Nav = (props) => {
-  const { subtitle } = props;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Nav = () => {
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
@@ -25,8 +22,9 @@ const Nav = (props) => {
   return (
     <div className="flex flex-row items-start w-5/6 justify-around">
       <div className="flex flex-col items-center">
-        <h1 className="font-bold text-5xl font-sans">To Do It</h1>
-        <h2 className="font-bold text-2xl font-sans">{subtitle}</h2>
+        <h1 className="font-bold text-5xl font-sans text-slate-500">
+          To Do It
+        </h1>
       </div>
       <div>
         <div>
