@@ -1,14 +1,35 @@
 import React, { useState } from "react";
 
 const Milestone = (props) => {
-  const { milestone, editing, index, removeMilestone } = props;
+  const {
+    milestone,
+    editing,
+    index,
+    removeMilestone,
+    cardIndex,
+    goalsList,
+    setGoalsList,
+    card,
+  } = props;
   const [mile, setMile] = useState({ ...milestone });
-  // finish
+
   const handleChange = (e) => {
     e.preventDefault();
     let editing = { ...mile };
     editing[e.target.name] = e.target.value;
     setMile(editing);
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    let milestoneClone = { ...mile };
+    let cardClone = { ...card };
+    let listClone = [...goalsList];
+    cardClone.milestones[index] = milestoneClone;
+    cardClone.milestones[index].milestoneEditing = false;
+    listClone[cardIndex] = cardClone;
+    console.log("list Clone:", listClone);
+    setGoalsList(listClone);
   };
 
   return (
@@ -64,7 +85,7 @@ const Milestone = (props) => {
             <button
               name="milestoneEditing"
               value={false}
-              onClick={(e) => handleChange(e)}
+              onClick={(e) => handleSave(e)}
               className="rounded bg-sky-400 px-[11px] my-2 shadow-md hover:bg-sky-300"
             >
               Save Milestone
