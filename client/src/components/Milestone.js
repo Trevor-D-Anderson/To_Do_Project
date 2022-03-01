@@ -31,6 +31,13 @@ const Milestone = (props) => {
     console.log("list Clone:", listClone);
     setGoalsList(listClone);
   };
+  //to format dates
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
 
   return (
     <div>
@@ -105,8 +112,12 @@ const Milestone = (props) => {
         <div className="border rounded-md border-blue-400 p-2 mb-2">
           <h2 className="text-lg font-bold font-sans">{mile.title}</h2>
           <div>
-            <h4 className="mb-1">Start Date: {mile.startDate}</h4>
-            <h4 className="mb-1">Due Date: {mile.dueDate}</h4>
+            <h4 className="mb-1">
+              Start Date: {mile.startDate.toLocaleDateString("en-us", options)}
+            </h4>
+            <h4 className="mb-1">
+              Due Date: {mile.dueDate.toLocaleDateString("en-us", options)}
+            </h4>
             <h3 className="font-bold text-md">Description:</h3>
             <h4 className="mb-1">{mile.description}</h4>
           </div>
