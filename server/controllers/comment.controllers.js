@@ -100,7 +100,7 @@ module.exports = {
   },
 
   deleteComment: (req, res) => {
-    Goal.deleteOne({ _id: req.params.id })
+    Comment.deleteOne({ _id: req.params.id })
       .then((result) => {
         console.log(result);
         res.json(result);

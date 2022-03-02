@@ -1,21 +1,11 @@
-This guide covers configuration and deployment elements of the ToDo It
-app. The app is written using the MERN stack. In this guide we will
-outline the configuration options needed to run in your environment, and
-provide quick start instructions using NodeJS with the config files we
-provide.
+# [ToDoIt Documentation](https://github.com/Trevor-D-Anderson/To_Do_Project.git)
 
-# General Information
+## Overview
+ToDoIt is meant as a motivational goal tracking app where users can track their own goals, connect with friends and encourage each other through interaction around these goals via likes and comments. This app is written in full stack Javascript using MongoDB, Express, React, and Node (sometimes called MERN) along with a few other supporting libraries listed below.
 
-## Project Name
+## Team Information
 
-### Title: ToDo it
-
-### Git HUB Repository [Git Repo](https://github.com/Trevor-D-Anderson/To_Do_Project.git)
-
-# Team Information
-
-This section contains information regarding The **MERN Team** team
-members from *Coding Dojo*.
+This app started as a portfolio project made by team members attending Coding Dojo.
 
 <table>
 <colgroup>
@@ -24,8 +14,7 @@ members from *Coding Dojo*.
 </colgroup>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><p><strong>Team Member
-Name</strong></p></td>
+<td style="text-align: left;"><p><strong>Team Member</strong></p></td>
 <td style="text-align: left;"><p><strong>Email</strong></p></td>
 </tr>
 <tr class="even">
@@ -54,57 +43,652 @@ href="mailto:tbone101@gmail.com">tbone101@gmail.com</a></p></td>
 </tbody>
 </table>
 
-# ToDoIt Endpoint configuration
-
 ## Back-End Routes
+*Note: all routes require credentials to be passed with the request.*
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"><strong>FHIR Setting</strong></th>
-<th style="text-align: left;"><strong>Value</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><p>SMART Launch URI</p></td>
-<td style="text-align: left;"><p>&lt;URL of the app&gt;/form/</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><p>Redirect URI</p></td>
-<td style="text-align: left;"><p>&lt;URL of the
-app&gt;/auth/patient_callback/</p></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><p>App Type</p></td>
-<td style="text-align: left;"><p>Patient</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><p>FHIR Spec</p></td>
-<td style="text-align: left;"><p>dstu2</p></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><p>Authorized</p></td>
-<td style="text-align: left;"><p>Yes</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><p>Standard Scopes</p></td>
-<td style="text-align: left;"><p>Launch, profile, openid, online_access,
-launch/patient</p></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><p>User Scopes</p></td>
-<td style="text-align: left;"><p>user/Patient.read</p></td>
-</tr>
-</tbody>
-</table>
+## Outline
+1. [User Routes](#id-user-routes)
+2. [Goal Routes](#id-comment-routes)
+3. [Milestone Routes](#id-milestone-routes)
+4. [Comment Routes](#id-comment-routes)
 
-Place warning messages here
+<div id="id-user-routes" />
+### User
 
-## Provider FHIR App
+#### *Registration*
+POST `localhost:8000/api/users/register`
 
-# Configuration
+**Request Body Example:**
+```JS
+{
+    "firstName": "Test",
+    "lastName": "Tester",
+    "email": "test@me.com",
+    "password": "testtest",
+    "confirmPassword": "testtest" 
+}
+```
+
+**Response Example**
+```JS
+{
+    "successMessage": "Thank you for registering",
+    "user": {
+        "firstName": "Test",
+        "lastName": "Tester",
+        "email": "test@me.com",
+        "password": "$2b$10$1z1vTBumAuMfR08S6HRByOJxSAT8DN1t6IREIDe.rI4Uk71WwCsIm",
+        "goals": [],
+        "comments": [],
+        "_id": "621ea1002cb0729c56171fb0",
+        "createdAt": "2022-03-01T22:41:04.675Z",
+        "updatedAt": "2022-03-01T22:41:04.675Z",
+        "__v": 0
+    }
+}
+```
+
+#### *Login*
+POST `localhost:8000/api/users/login`
+
+**Request Body Example:**
+```JS
+{
+    "email": "test@me.com",
+    "password": "testtest"
+}
+```
+
+**Response Example**
+```JS
+{
+    "message": "Successfully logged in",
+    "user": {
+        "_id": "621ea1002cb0729c56171fb0",
+        "firstName": "Test",
+        "lastName": "Tester",
+        "email": "test@me.com",
+        "password": "$2b$10$1z1vTBumAuMfR08S6HRByOJxSAT8DN1t6IREIDe.rI4Uk71WwCsIm",
+        "goals": [
+            "621ea1d52cb0729c56171fb5"
+        ],
+        "comments": [
+            "621ea3462cb0729c56171fc8",
+            "621ea3612cb0729c56171fcd"
+        ],
+        "createdAt": "2022-03-01T22:41:04.675Z",
+        "updatedAt": "2022-03-01T22:51:13.392Z",
+        "__v": 0
+    }
+}
+```
+
+#### *Logout*
+POST `localhost:8000/api/users/logout`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "message": "You have successfully logged out."
+}
+```
+
+#### *Get Authenticated User*
+GET `localhost:8000/api/users/authenticated`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621ea1002cb0729c56171fb0",
+    "firstName": "Test",
+    "lastName": "Tester",
+    "email": "test@me.com",
+    "password": "$2b$10$1z1vTBumAuMfR08S6HRByOJxSAT8DN1t6IREIDe.rI4Uk71WwCsIm",
+    "goals": [
+        {
+            "_id": "621ea1d52cb0729c56171fb5",
+            "title": "Document the API",
+            "completed": false,
+            "comments": [
+                "621ea3462cb0729c56171fc8",
+                "621ea3612cb0729c56171fcd"
+            ],
+            "milestones": [
+                {
+                    "_id": "621ea2df2cb0729c56171fbd",
+                    "title": "Test routes to get in/out examples",
+                    "description": "tesetsetsestes",
+                    "completed": false,
+                    "createdBy": "621ea1002cb0729c56171fb0",
+                    "associatedGoal": "621ea1d52cb0729c56171fb5",
+                    "createdAt": "2022-03-01T22:49:03.843Z",
+                    "updatedAt": "2022-03-01T22:49:03.843Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "621ea2f12cb0729c56171fc1",
+                    "title": "Document routes in readme.md with in/out examples",
+                    "description": "tesetsetsestes",
+                    "completed": false,
+                    "createdBy": "621ea1002cb0729c56171fb0",
+                    "associatedGoal": "621ea1d52cb0729c56171fb5",
+                    "createdAt": "2022-03-01T22:49:21.633Z",
+                    "updatedAt": "2022-03-01T22:49:21.633Z",
+                    "__v": 0
+                }
+            ],
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:44:37.487Z",
+            "updatedAt": "2022-03-01T22:51:13.362Z",
+            "__v": 0
+        }
+    ],
+    "comments": [
+        "621ea3462cb0729c56171fc8",
+        "621ea3612cb0729c56171fcd"
+    ],
+    "createdAt": "2022-03-01T22:41:04.675Z",
+    "updatedAt": "2022-03-01T22:51:13.392Z",
+    "__v": 0
+}
+```
+
+#### *Get User by ID*
+GET `localhost:8000/api/users/id/621ea1002cb0729c56171fb0`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621ea1002cb0729c56171fb0",
+    "firstName": "Test",
+    "lastName": "Tester",
+    "email": "test@me.com",
+    "password": "$2b$10$1z1vTBumAuMfR08S6HRByOJxSAT8DN1t6IREIDe.rI4Uk71WwCsIm",
+    "goals": [
+        {
+            "_id": "621ea1d52cb0729c56171fb5",
+            "title": "Document the API",
+            "completed": false,
+            "comments": [
+                "621ea3462cb0729c56171fc8",
+                "621ea3612cb0729c56171fcd"
+            ],
+            "milestones": [
+                {
+                    "_id": "621ea2df2cb0729c56171fbd",
+                    "title": "Test routes to get in/out examples",
+                    "description": "tesetsetsestes",
+                    "completed": false,
+                    "createdBy": "621ea1002cb0729c56171fb0",
+                    "associatedGoal": "621ea1d52cb0729c56171fb5",
+                    "createdAt": "2022-03-01T22:49:03.843Z",
+                    "updatedAt": "2022-03-01T22:49:03.843Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "621ea2f12cb0729c56171fc1",
+                    "title": "Document routes in readme.md with in/out examples",
+                    "description": "tesetsetsestes",
+                    "completed": false,
+                    "createdBy": "621ea1002cb0729c56171fb0",
+                    "associatedGoal": "621ea1d52cb0729c56171fb5",
+                    "createdAt": "2022-03-01T22:49:21.633Z",
+                    "updatedAt": "2022-03-01T22:49:21.633Z",
+                    "__v": 0
+                }
+            ],
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:44:37.487Z",
+            "updatedAt": "2022-03-01T22:51:13.362Z",
+            "__v": 0
+        }
+    ],
+    "comments": [
+        "621ea3462cb0729c56171fc8",
+        "621ea3612cb0729c56171fcd"
+    ],
+    "createdAt": "2022-03-01T22:41:04.675Z",
+    "updatedAt": "2022-03-01T22:51:13.392Z",
+    "__v": 0
+}
+```
+
+#### *Update User by ID*
+PUT `localhost:8000/api/users/id/621ea1002cb0729c56171fb0`
+
+**Request Body Example:**
+```JS
+{
+    "lastName": "Testerly"
+}
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621ea1002cb0729c56171fb0",
+    "firstName": "Test",
+    "lastName": "Testerly",
+    "email": "test@me.com",
+    "password": "$2b$10$1z1vTBumAuMfR08S6HRByOJxSAT8DN1t6IREIDe.rI4Uk71WwCsIm",
+    "goals": [
+        "621ea1d52cb0729c56171fb5"
+    ],
+    "comments": [
+        "621ea3462cb0729c56171fc8",
+        "621ea3612cb0729c56171fcd"
+    ],
+    "createdAt": "2022-03-01T22:41:04.675Z",
+    "updatedAt": "2022-03-01T23:13:29.020Z",
+    "__v": 0
+}
+```
+
+<div id="id-goal-routes" />
+### Goal
+
+#### *Create Goal*
+POST `localhost:8000/api/goals`
+
+**Request Body Example:**
+```JS
+{
+    "title": "Deploy App",
+    "completed": "false",
+    "createdBy": "621c2939c971d0048e3345d5"
+}
+```
+
+**Response Example**
+```JS
+{
+    "title": "Deploy App",
+    "completed": false,
+    "comments": [],
+    "milestones": [],
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "_id": "621ea9522cb0729c56171fe0",
+    "createdAt": "2022-03-01T23:16:34.065Z",
+    "updatedAt": "2022-03-01T23:16:34.065Z",
+    "__v": 0
+}
+```
+
+#### *Get One Goal*
+GET `localhost:8000/api/goals/621ea1d52cb0729c56171fb5`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621ea1d52cb0729c56171fb5",
+    "title": "Document the API",
+    "completed": false,
+    "comments": [
+        {
+            "_id": "621ea3462cb0729c56171fc8",
+            "body": "This is awesome and will greatly improve our working efficiency!",
+            "likes": 0,
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:50:46.523Z",
+            "updatedAt": "2022-03-01T22:50:46.523Z"
+        },
+        {
+            "_id": "621ea3612cb0729c56171fcd",
+            "body": "Can't wait to see how this turns out.",
+            "likes": 0,
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:51:13.350Z",
+            "updatedAt": "2022-03-01T22:51:13.350Z"
+        }
+    ],
+    "milestones": [
+        {
+            "_id": "621ea2df2cb0729c56171fbd",
+            "title": "Test routes to get in/out examples",
+            "description": "tesetsetsestes",
+            "completed": false,
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdAt": "2022-03-01T22:49:03.843Z",
+            "updatedAt": "2022-03-01T22:49:03.843Z"
+        },
+        {
+            "_id": "621ea2f12cb0729c56171fc1",
+            "title": "Document routes in readme.md with in/out examples",
+            "description": "tesetsetsestes",
+            "completed": false,
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdAt": "2022-03-01T22:49:21.633Z",
+            "updatedAt": "2022-03-01T22:49:21.633Z"
+        }
+    ],
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "createdAt": "2022-03-01T22:44:37.487Z",
+    "updatedAt": "2022-03-01T22:51:13.362Z",
+    "__v": 0
+}
+```
+
+#### *Get All Goals By User*
+GET `localhost:8000/api/goals/user/621ea1002cb0729c56171fb0`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+[
+    {
+        "_id": "621ea9522cb0729c56171fe0",
+        "title": "Deploy App",
+        "completed": false,
+        "comments": [],
+        "milestones": [],
+        "createdBy": "621ea1002cb0729c56171fb0",
+        "createdAt": "2022-03-01T23:16:34.065Z",
+        "updatedAt": "2022-03-01T23:16:34.065Z",
+        "__v": 0
+    },
+    {
+        "_id": "621ea1d52cb0729c56171fb5",
+        "title": "Document the API",
+        "completed": false,
+        "comments": [
+            {
+                "_id": "621ea3462cb0729c56171fc8",
+                "body": "This is awesome and will greatly improve our working efficiency!",
+                "likes": 0,
+                "associatedGoal": "621ea1d52cb0729c56171fb5",
+                "createdBy": "621ea1002cb0729c56171fb0",
+                "createdAt": "2022-03-01T22:50:46.523Z",
+                "updatedAt": "2022-03-01T22:50:46.523Z"
+            },
+            {
+                "_id": "621ea3612cb0729c56171fcd",
+                "body": "Can't wait to see how this turns out.",
+                "likes": 0,
+                "associatedGoal": "621ea1d52cb0729c56171fb5",
+                "createdBy": "621ea1002cb0729c56171fb0",
+                "createdAt": "2022-03-01T22:51:13.350Z",
+                "updatedAt": "2022-03-01T22:51:13.350Z"
+            }
+        ],
+        "milestones": [
+            {
+                "_id": "621ea2df2cb0729c56171fbd",
+                "title": "Test routes to get in/out examples",
+                "description": "tesetsetsestes",
+                "completed": false,
+                "createdBy": "621ea1002cb0729c56171fb0",
+                "associatedGoal": "621ea1d52cb0729c56171fb5",
+                "createdAt": "2022-03-01T22:49:03.843Z",
+                "updatedAt": "2022-03-01T22:49:03.843Z"
+            },
+            {
+                "_id": "621ea2f12cb0729c56171fc1",
+                "title": "Document routes in readme.md with in/out examples",
+                "description": "tesetsetsestes",
+                "completed": false,
+                "createdBy": "621ea1002cb0729c56171fb0",
+                "associatedGoal": "621ea1d52cb0729c56171fb5",
+                "createdAt": "2022-03-01T22:49:21.633Z",
+                "updatedAt": "2022-03-01T22:49:21.633Z"
+            }
+        ],
+        "createdBy": "621ea1002cb0729c56171fb0",
+        "createdAt": "2022-03-01T22:44:37.487Z",
+        "updatedAt": "2022-03-01T22:51:13.362Z",
+        "__v": 0
+    }
+]
+```
+
+#### *Update Goal*
+PUT `localhost:8000/api/goals/user/621ea1002cb0729c56171fb0`
+
+**Request Body Example:**
+```JS
+{
+    "title": "Document the heck out of this API!"
+}
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621ea1d52cb0729c56171fb5",
+    "title": "Document the heck out of this API!",
+    "completed": false,
+    "comments": [
+        {
+            "_id": "621ea3462cb0729c56171fc8",
+            "body": "This is awesome and will greatly improve our working efficiency!",
+            "likes": 0,
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:50:46.523Z",
+            "updatedAt": "2022-03-01T22:50:46.523Z"
+        },
+        {
+            "_id": "621ea3612cb0729c56171fcd",
+            "body": "Can't wait to see how this turns out.",
+            "likes": 0,
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "createdAt": "2022-03-01T22:51:13.350Z",
+            "updatedAt": "2022-03-01T22:51:13.350Z"
+        }
+    ],
+    "milestones": [
+        {
+            "_id": "621ea2df2cb0729c56171fbd",
+            "title": "Test routes to get in/out examples",
+            "description": "tesetsetsestes",
+            "completed": false,
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdAt": "2022-03-01T22:49:03.843Z",
+            "updatedAt": "2022-03-01T22:49:03.843Z"
+        },
+        {
+            "_id": "621ea2f12cb0729c56171fc1",
+            "title": "Document routes in readme.md with in/out examples",
+            "description": "tesetsetsestes",
+            "completed": false,
+            "createdBy": "621ea1002cb0729c56171fb0",
+            "associatedGoal": "621ea1d52cb0729c56171fb5",
+            "createdAt": "2022-03-01T22:49:21.633Z",
+            "updatedAt": "2022-03-01T22:49:21.633Z"
+        }
+    ],
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "createdAt": "2022-03-01T22:44:37.487Z",
+    "updatedAt": "2022-03-01T23:24:55.773Z",
+    "__v": 0
+}
+```
+
+#### *Delete Goal*
+DELETE `localhost:8000/api/goals/621ea9522cb0729c56171fe0`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "deletedCount": 1
+}
+```
+
+<div id="id-milestone-routes" />
+### Milestone 
+
+#### *Create Milestone*
+POST `localhost:8000/api/milestones`
+
+**Request Body Example:**
+```JS
+{
+    "title": "Celebrate having documented the API!",
+    "description": "Oh yeah!",
+    "completed": "false",
+    "createdBy": "621c2939c971d0048e3345d5",
+    "associatedGoal": "621ea1d52cb0729c56171fb5"
+}
+```
+
+**Response Example**
+```JS
+{
+    "title": "Celebrate having documented the API!",
+    "description": "Oh yeah!",
+    "completed": false,
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "associatedGoal": "621ea1d52cb0729c56171fb5",
+    "_id": "621eac790692545f0cf09339",
+    "createdAt": "2022-03-01T23:30:01.747Z",
+    "updatedAt": "2022-03-01T23:30:01.747Z",
+    "__v": 0
+}
+```
+
+#### *Update Milestone*
+PUT `localhost:8000/api/milestones/621eac790692545f0cf09339`
+
+**Request Body Example:**
+```JS
+{
+    "description": "Heck Yeah!"
+}
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621eac790692545f0cf09339",
+    "title": "Celebrate having documented the API!",
+    "description": "Heck Yeah!",
+    "completed": false,
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "associatedGoal": "621ea1d52cb0729c56171fb5",
+    "createdAt": "2022-03-01T23:30:01.747Z",
+    "updatedAt": "2022-03-01T23:32:53.716Z",
+    "__v": 0
+}
+```
+
+#### *Delete Milestone*
+DELETE `localhost:8000/api/milestones/621eac790692545f0cf09339`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "deletedCount": 1
+}
+```
+
+<div id="id-comment-routes" />
+### Comment
+
+#### *Create Comment*
+POST `localhost:8000/api/comments`
+
+**Request Body Example:**
+```JS
+{
+    "body": "I love documentation!",
+    "likes": 0,
+    "associatedGoal": "621ea1d52cb0729c56171fb5"
+}
+```
+
+**Response Example**
+```JS
+{
+    "body": "I love documentation!",
+    "likes": 0,
+    "associatedGoal": "621ea1d52cb0729c56171fb5",
+    "_id": "621eaf36936419abfa59b57a",
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "createdAt": "2022-03-01T23:41:42.683Z",
+    "updatedAt": "2022-03-01T23:41:42.683Z",
+    "__v": 0
+}
+```
+
+#### *Update Comment*
+PUT `localhost:8000/api/comments/621eaf36936419abfa59b57a`
+
+**Request Body Example:**
+```JS
+{
+    "body": "I too, love documentation:)"
+}
+```
+
+**Response Example**
+```JS
+{
+    "_id": "621eaf36936419abfa59b57a",
+    "body": "I too, love documentation:)",
+    "likes": 0,
+    "associatedGoal": "621ea1d52cb0729c56171fb5",
+    "createdBy": "621ea1002cb0729c56171fb0",
+    "createdAt": "2022-03-01T23:41:42.683Z",
+    "updatedAt": "2022-03-01T23:45:28.967Z",
+    "__v": 0
+}
+```
+
+#### *Delete Comment*
+DELETE `localhost:8000/api/comments/621eaf36936419abfa59b57a`
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+{
+    "deletedCount": 1
+}
+```
+
+
+
+## Developer Setup
+Work in progress...

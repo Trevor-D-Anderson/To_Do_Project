@@ -113,6 +113,14 @@ module.exports = {
       new: true,
       runValidators: true,
     })
+      .populate(
+        "milestones",
+        "title description completed createdBy startDate dueDate completedDate associatedGoal createdAt updatedAt _id"
+      )
+      .populate(
+        "comments",
+        "body likes associatedGoal createdBy createdAt updatedAt _id"
+      )
       .then((updatedGoal) => {
         console.log(updatedGoal);
         res.json(updatedGoal);
