@@ -50,9 +50,30 @@ const RegisterForm = (props) => {
           confirmPassword: "",
         });
         setErrors({});
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("userId", res.data.user._id);
-        navigate("/profile");
+        axios
+          .post(
+            "http://localhost:8000/api/users/login",
+            {
+              email: user.email,
+              password: user.password,
+            },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log("response: ", res);
+            //setUserEmail(email_login);
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("userId", res.data.user._id);
+            navigate("/profile");
+          })
+          .catch((err) => {
+            console.log(err.res.data);
+            //console.log(err);
+            setErrorMessage(err.res.data.message);
+            //setErrorMessage(err.res.data.errors);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -84,9 +105,9 @@ const RegisterForm = (props) => {
         navigate("/profile");
       })
       .catch((err) => {
-        console.log(err.res.data);
+        console.log(err.data);
         //console.log(err);
-        setErrorMessage(err.res.data.message);
+        setErrorMessage(err.data.message);
         //setErrorMessage(err.res.data.errors);
       });
   };
@@ -100,7 +121,7 @@ const RegisterForm = (props) => {
       </div>
       <div className="flex flex-row w-5/6 justify-around flex-wrap">
         {/* Div for Login Form */}
-        <div className="w-[400px]">
+        <div className="w-[400px] min-h-[450px] mb-8">
           <div className="min-h-full flex items-center rounded-2xl shadow-lg justify-center px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-md w-full">
               <div>
@@ -172,7 +193,7 @@ const RegisterForm = (props) => {
         </div>
 
         {/* Div for Register Form */}
-        <div>
+        <div className="mb-8">
           <div className="min-h-full w-[400px] rounded-2xl shadow-lg flex items-center justify-center pb-12 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-md  w-full">
               <div>
