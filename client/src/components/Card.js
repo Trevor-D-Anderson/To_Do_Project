@@ -4,7 +4,7 @@ import Milestone from "./Milestone";
 
 const Card = (props) => {
   const { card, goalsList, setGoalsList, cardIndex, setRender } = props;
-  const [thisCard, setThisCard] = useState({});
+  const [thisCard, setThisCard] = useState({ ...card });
 
   const options = {
     weekday: "long",
@@ -37,7 +37,6 @@ const Card = (props) => {
         .then((res) => {
           console.log(res);
           editing = { ...res.data, editing: false };
-          console.log();
           cardId = res.data._id;
           for (let x = 0; x < thisCard["milestones"].length; x++) {
             let milestone = {
@@ -61,6 +60,8 @@ const Card = (props) => {
           console.log(err);
         });
     } else {
+      let cardId = "";
+      let editing = {};
       let goal = {
         title: thisCard["title"],
         description: thisCard["description"],
@@ -78,7 +79,38 @@ const Card = (props) => {
         })
         .then((res) => {
           console.log(res);
-          let editing = { ...res.data };
+          editing = { ...res.data, editing: false };
+          cardId = res.data._id;
+          for (let x = 0; x < thisCard["milestones"].length; x++) {
+            let milestone = {
+              title: thisCard.milestones[x].title,
+              description: thisCard.milestones[x].description,
+              completed: false,
+              startDate: thisCard.milestones[x].startDate,
+              dueDate: thisCard.milestones[x].dueDate,
+              completedDate: "",
+              associatedGoal: cardId,
+            };
+            if (!thisCard.milestones[x]._id) {
+              axios
+                .post(`http://localhost:8000/api/milestones`, milestone, {
+                  withCredentials: true,
+                })
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+            } else {
+              axios
+                .put(
+                  `http://localhost:8000/api/milestones/${thisCard.milestones[x]._id}`,
+                  milestone,
+                  {
+                    withCredentials: true,
+                  }
+                )
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+            }
+          }
           editing["editing"] = false;
           setThisCard(editing);
         })
@@ -116,11 +148,15 @@ const Card = (props) => {
     e.preventDefault();
     if (!thisCard["editing"]) {
       let cardClone = { ...thisCard, editing: true };
-      setThisCard(cardClone);
+      let listClone = [...goalsList];
+      listClone[cardIndex] = cardClone;
+      setGoalsList(listClone);
     } else {
       let cardClone = { ...thisCard };
       cardClone["editing"] = true;
-      setThisCard(cardClone);
+      let listClone = [...goalsList];
+      listClone[cardIndex] = cardClone;
+      setGoalsList(listClone);
     }
   };
 
@@ -239,7 +275,7 @@ const Card = (props) => {
           </button>
         </form>
       ) : (
-        <div className="mb-4 w-4/6">
+        <div className="mb-4 w-5/6">
           <h2 className="text-4xl font-bold font-sans text-slate-500 mt-2 text-center mb-4">
             {card.title}
           </h2>
@@ -255,10 +291,45 @@ const Card = (props) => {
           </div>
           <div>
             <h3 className="font-bold text-slate-500">Description:</h3>
-            <h4 className="border border-slate-300 w-full min-h-[50px] rounded-md p-2 my-2">
+            <h4 className="border border-slate-300 shadow-md w-full min-h-[50px] rounded-md p-2 my-2">
               {card.description}
             </h4>
           </div>
+          <h3 className="font-bold text-slate-500 mt-4 text-3xl">
+            Milestones:
+          </h3>
+          {card.milestones.map((milestone, index) => {
+            return (
+              <div
+                key={index}
+                className="mt-2 mb-4 border rounded-md shadow-md border-slate-300 p-4"
+              >
+                <h3 className="font-bold text-slate-500 text-2xl">
+                  {milestone.title}
+                </h3>
+                <div>
+                  <h3>
+                    <span className="font-bold text-slate-500">
+                      Milestone Start Date:
+                    </span>{" "}
+                    {displayDate(milestone.startDate)}
+                  </h3>
+                  <h3>
+                    <span className="font-bold text-slate-500">
+                      Milestone Due Date:
+                    </span>{" "}
+                    {displayDate(milestone.dueDate)}
+                  </h3>
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-500 text-md">
+                    Description
+                  </h3>
+                  <h4 className="">{milestone.description}</h4>
+                </div>
+              </div>
+            );
+          })}
           <div className="flex flex-row justify-between">
             <button
               onClick={(e) => handleEdit(e)}
