@@ -53,6 +53,7 @@ href="mailto:tbone101@gmail.com">tbone101@gmail.com</a></p></td>
 4. [Comment Routes](#id-comment-routes)
 
 <div id="id-user-routes" />
+
 ### User
 
 #### *Registration*
@@ -300,6 +301,7 @@ PUT `localhost:8000/api/users/id/621ea1002cb0729c56171fb0`
 ```
 
 <div id="id-goal-routes" />
+
 ### Goal
 
 #### *Create Goal*
@@ -549,6 +551,7 @@ none
 ```
 
 <div id="id-milestone-routes" />
+
 ### Milestone 
 
 #### *Create Milestone*
@@ -621,6 +624,7 @@ none
 ```
 
 <div id="id-comment-routes" />
+
 ### Comment
 
 #### *Create Comment*
