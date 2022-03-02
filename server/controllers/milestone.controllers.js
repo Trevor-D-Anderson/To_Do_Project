@@ -82,7 +82,7 @@ module.exports = {
   },
   
   deleteMilestone: (req, res) => {
-    Goal.deleteOne({ _id: req.params.id })
+    Milestone.deleteOne({ _id: req.params.id })
       .then((result) => {
         console.log(result);
         res.json(result);
