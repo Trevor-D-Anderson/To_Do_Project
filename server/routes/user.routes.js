@@ -20,14 +20,14 @@ module.exports = (app) => {
     "/api/users/email/:email",
     authenticate,
     UserController.getOneUserByEmail
-  ); // will need route for getting users by id also
+  );
   app.put(
     "/api/users/email/:email",
     authenticate,
     UserController.updateUserByEmail
   );
   app.delete("/api/users/delete/:id", UserController.deleteUser);
-  //below is for the search functionality
+  // below is for the search functionality
   app.get(
     "/api/users/search/:searchTerm",
     authenticate,
