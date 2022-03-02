@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { query } = require("express");
 
 module.exports = {
   register: (req, res) => {
@@ -168,6 +169,18 @@ module.exports = {
       })
       .catch((err) => {
         console.log("Update Failed");
+        res.status(400).json(err);
+      });
+  },
+
+  searchUsers: (req, res) => {
+    User.fuzzySearch(req.params.searchTerm)
+      .then((results) => {
+        console.log(results);
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log("Search failed");
         res.status(400).json(err);
       });
   },
