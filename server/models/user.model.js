@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcrypt");
+const mongoose_fuzzy_searching = require("mongoose-fuzzy-searching");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -48,6 +49,11 @@ const UserSchema = new mongoose.Schema(
 UserSchema.plugin(uniqueValidator, {
   message:
     "An account for that email already exists, please use a unique email address to register.",
+});
+
+// enables fuzzy searching for users
+UserSchema.plugin(mongoose_fuzzy_searching, {
+  fields: ["firstName", "lastName"],
 });
 
 // virtual attribute to store password confirmation temporarily
