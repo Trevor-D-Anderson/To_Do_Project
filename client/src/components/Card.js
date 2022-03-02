@@ -6,6 +6,9 @@ const Card = (props) => {
   const { card, goalsList, setGoalsList, cardIndex, setRender } = props;
   const [thisCard, setThisCard] = useState({ ...card });
 
+  const up = require("../static/803031.png");
+  const down = require("../static/803037.png");
+
   const options = {
     weekday: "long",
     year: "numeric",
@@ -52,7 +55,11 @@ const Card = (props) => {
               .post("http://localhost:8000/api/milestones", milestone, {
                 withCredentials: true,
               })
-              .then((res) => console.log(res))
+              .then((res) => {
+                console.log(res);
+                setThisCard(res.data);
+                setRender(true);
+              })
               .catch((err) => console.log(err));
           }
         })
@@ -67,7 +74,6 @@ const Card = (props) => {
         description: thisCard["description"],
         completed: thisCard["completed"],
         comments: thisCard["comments"],
-        milestones: thisCard["milestones"],
         startDate: thisCard["startDate"],
         dueDate: thisCard["dueDate"],
         completedDate: thisCard["completedDate"],
@@ -96,7 +102,10 @@ const Card = (props) => {
                 .post(`http://localhost:8000/api/milestones`, milestone, {
                   withCredentials: true,
                 })
-                .then((res) => console.log(res))
+                .then((res) => {
+                  console.log(res);
+                  setRender(true);
+                })
                 .catch((err) => console.log(err));
             } else {
               axios
@@ -107,12 +116,14 @@ const Card = (props) => {
                     withCredentials: true,
                   }
                 )
-                .then((res) => console.log(res))
+                .then((res) => {
+                  console.log(res);
+                  setRender(true);
+                })
                 .catch((err) => console.log(err));
             }
           }
           editing["editing"] = false;
-          setThisCard(editing);
         })
         .catch((err) => {
           console.log(err);
@@ -190,6 +201,20 @@ const Card = (props) => {
   const displayDate = (d) => {
     let date = new Date(d);
     return date.toLocaleString("en-us", options);
+  };
+
+  const handleExpand = (e) => {
+    e.preventDefault();
+    let change = { ...thisCard };
+    change.compact = false;
+    setThisCard(change);
+  };
+
+  const handleCompact = (e) => {
+    e.preventDefault();
+    let change = { ...thisCard };
+    change.compact = true;
+    setThisCard(change);
   };
 
   return (
@@ -274,8 +299,26 @@ const Card = (props) => {
             Save Goal
           </button>
         </form>
+      ) : thisCard.compact ? (
+        <div className="mb-4 w-5/6">
+          <img
+            onClick={(e) => handleExpand(e)}
+            className="w-8 h-8 relative top-4 left-full hover:top-5 hover:cursor-pointer"
+            src={up}
+            alt="Expand Img"
+          />
+          <h2 className="text-4xl font-bold font-sans text-slate-500 mt-2 text-center mb-4">
+            {card.title}
+          </h2>
+        </div>
       ) : (
         <div className="mb-4 w-5/6">
+          <img
+            onClick={(e) => handleCompact(e)}
+            src={down}
+            alt="Contract Img"
+            className="w-8 h-8 relative top-4 left-full hover:top-5 hover:cursor-pointer"
+          />
           <h2 className="text-4xl font-bold font-sans text-slate-500 mt-2 text-center mb-4">
             {card.title}
           </h2>

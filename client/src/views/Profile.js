@@ -24,7 +24,12 @@ const Profile = () => {
       .then((res) => {
         console.log(res);
         setRender(false);
-        setGoalsList([...res.data]);
+        let compact = [...res.data];
+        for (let x = 0; x < compact.length; x++) {
+          let card = { ...compact[x], compact: true };
+          compact[x] = card;
+        }
+        setGoalsList(compact);
       })
       .catch((err) => {
         console.log(err);
