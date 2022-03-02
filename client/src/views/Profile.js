@@ -25,6 +25,13 @@ const Profile = () => {
         console.log(res);
         setRender(false);
         setGoalsList([...res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.message);
+        if (err.message === "Request failed with status code 401") {
+          navigate("/");
+        }
       });
   }, [render]);
 
