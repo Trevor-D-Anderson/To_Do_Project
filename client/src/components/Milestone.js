@@ -17,20 +17,40 @@ const Milestone = (props) => {
     e.preventDefault();
     let editing = { ...mile };
     editing[e.target.name] = e.target.value;
+    let cardClone = { ...card };
+    let listClone = [...goalsList];
+    cardClone.milestones[index] = editing;
+    listClone[cardIndex] = cardClone;
+    console.log("list Clone:", listClone);
     setMile(editing);
+    setGoalsList(listClone);
   };
 
   const handleSave = (e) => {
     e.preventDefault();
-    let milestoneClone = { ...mile };
+    let milestoneClone = { ...milestone };
     let cardClone = { ...card };
     let listClone = [...goalsList];
+    milestoneClone["milestoneEditing"] = false;
     cardClone.milestones[index] = milestoneClone;
-    cardClone.milestones[index].milestoneEditing = false;
     listClone[cardIndex] = cardClone;
     console.log("list Clone:", listClone);
+    setMile(milestoneClone);
     setGoalsList(listClone);
   };
+
+  const handleEditMode = (e) => {
+    e.preventDefault();
+    if (!mile["milestoneEditing"]) {
+      let mileClone = { ...mile, milestoneEditing: true };
+      setMile(mileClone);
+    } else {
+      let mileClone = { ...mile };
+      mileClone["milestoneEditing"] = true;
+      setMile(mileClone);
+    }
+  };
+
   //to format dates
   const options = {
     weekday: "long",
@@ -42,7 +62,7 @@ const Milestone = (props) => {
   return (
     <div>
       {mile.milestoneEditing === true ? (
-        <div className="border rounded-md border-blue-400 p-2 mb-2">
+        <div className="border rounded-md border-slate-300 shadow-md p-2 mb-2">
           <div className="flex flex-row justify-between mb-1 ">
             <label className="text-lg font-bold font-sans">
               Milestone Name:
@@ -51,7 +71,7 @@ const Milestone = (props) => {
               className="border rounded-md border-blue-400 h-8 w-[246px] text-2xl font-bold"
               type="text"
               name="title"
-              value={mile.title}
+              value={milestone.title}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -62,7 +82,7 @@ const Milestone = (props) => {
               type="datetime-local"
               name="startDate"
               id=""
-              value={mile.startDate}
+              value={milestone.startDate}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -73,7 +93,7 @@ const Milestone = (props) => {
               type="datetime-local"
               name="dueDate"
               id=""
-              value={mile.dueDate}
+              value={milestone.dueDate}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -85,13 +105,11 @@ const Milestone = (props) => {
               className="resize-y border rounded-md border-blue-400"
               name="description"
               onChange={(e) => handleChange(e)}
-              value={mile.description}
+              value={milestone.description}
             ></textarea>
           </div>
           <div className="flex flex-row justify-between">
             <button
-              name="milestoneEditing"
-              value={false}
               onClick={(e) => handleSave(e)}
               className="rounded bg-sky-400 px-[11px] my-2 shadow-md hover:bg-sky-300"
             >
@@ -109,18 +127,20 @@ const Milestone = (props) => {
           </div>
         </div>
       ) : (
-        <div className="border rounded-md border-blue-400 p-2 mb-2">
+        <div className="border rounded-md border-slate-300 shadow-md p-2 mb-2">
           <h2 className="text-lg font-bold font-sans">{mile.title}</h2>
           <div>
-            <h4 className="mb-1">
-              Start Date: {mile.startDate.toLocaleDateString("en-us", options)}
-            </h4>
-            <h4 className="mb-1">
-              Due Date: {mile.dueDate.toLocaleDateString("en-us", options)}
-            </h4>
+            <h4 className="mb-1">Start Date: {mile.startDate}</h4>
+            <h4 className="mb-1">Due Date: {mile.dueDate}</h4>
             <h3 className="font-bold text-md">Description:</h3>
             <h4 className="mb-1">{mile.description}</h4>
           </div>
+          <button
+            className=" bg-yellow-300 hover:bg-yellow-200 shadow-md rounded-md px-2 p-1"
+            onClick={(e) => handleEditMode(e)}
+          >
+            Edit Milestone
+          </button>
         </div>
       )}
     </div>

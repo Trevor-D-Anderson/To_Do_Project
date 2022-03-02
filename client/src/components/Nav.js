@@ -34,7 +34,13 @@ const Nav = () => {
           >
             LogOut
           </button>
-          <button className=" bg-emerald-500 rounded-md mt-2 px-2 shadow-md hover:bg-emerald-400 p-0.5 font-bold">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/friends");
+            }}
+            className=" bg-emerald-500 rounded-md mt-2 px-2 shadow-md hover:bg-emerald-400 p-0.5 font-bold"
+          >
             Find People
           </button>
         </div>
