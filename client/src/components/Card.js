@@ -317,7 +317,7 @@ const Card = (props) => {
             onClick={(e) => handleCompact(e)}
             src={down}
             alt="Contract Img"
-            className="w-8 h-8 relative top-4 left-full hover:top-5 hover:cursor-pointer"
+            className="w-8 h-8 relative top-4 left-full hover:top-3 hover:cursor-pointer"
           />
           <h2 className="text-4xl font-bold font-sans text-slate-500 mt-2 text-center mb-4">
             {card.title}
