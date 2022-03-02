@@ -204,6 +204,47 @@ none
 }
 ```
 
+#### *Search Users*
+GET `localhost:8000/api/users/search/Milo TheCat`
+*Note: spaces are allowed in search term*
+
+**Request Body Example:**
+```JS
+none
+```
+
+**Response Example**
+```JS
+[
+    {
+        "_id": "621ef9b33363c5d9395c0ef2",
+        "firstName": "Milo",
+        "lastName": "TheCat",
+        "email": "milo@me.com",
+        "password": "$2b$10$z.9OUNXsPkes/Pyeg5bt.ePwPphsM0rKoEJJUgGl8aFdJRzlho3n2",
+        "goals": [],
+        "comments": [],
+        "createdAt": "2022-03-02T04:59:31.112Z",
+        "updatedAt": "2022-03-02T04:59:31.112Z",
+        "__v": 0,
+        "confidenceScore": 19.8
+    },
+    {
+        "_id": "621ef9c03363c5d9395c0ef6",
+        "firstName": "Dash",
+        "lastName": "TheCat",
+        "email": "dash@me.com",
+        "password": "$2b$10$mripF3zR9nRER.pvXKnSxOWu/KuVgVwlgl35jELrOT.mYSsPeLUeq",
+        "goals": [],
+        "comments": [],
+        "createdAt": "2022-03-02T04:59:44.573Z",
+        "updatedAt": "2022-03-02T04:59:44.573Z",
+        "__v": 0,
+        "confidenceScore": 13.199999999999998
+    }
+]
+```
+
 #### *Get User by ID*
 GET `localhost:8000/api/users/id/621ea1002cb0729c56171fb0`
 
