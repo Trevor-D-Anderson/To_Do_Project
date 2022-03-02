@@ -81,10 +81,7 @@ module.exports = {
 
   logout: (req, res) => {
     console.log("logging out");
-    res.cookie("usertoken", "none", {
-      expires: new Date(Date.now() + 5 * 1000), // set token to expire after 5 seconds
-      httpOnly: true,
-    });
+    res.clearCookie("usertoken");
     res.json({
       message: "You have successfully logged out.",
     });
